@@ -2,28 +2,36 @@
   "name": "blackjack-react",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "postinstall": "npm run webpack",
-    "webpack": "./node_modules/webpack/bin/webpack.js",
-    "start:dev": "npm run webpack -- --watch --mode=development & nodemon server --ignore src/ --ignore dist/"
+    "webpack": "webpack",
+    "build": "npm run webpack -- --watch --mode=development",
+    "start:dev": "npm run build & nodemon server.js --ignore dist --ignore src"
   },
   "author": "",
   "license": "ISC",
   "babel": {
     "presets": [
-      "env"
+      "react"
     ]
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "babel-core": "^6.26.3",
-    "babel-loader": "^8.0.6",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "css-loader": "^3.2.0",
-    "express": "^4.17.1",
-    "style-loader": "^1.0.0",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "babel-loader": "^7.1.5",
+    "babel-preset-react": "^6.24.1",
+    "express": "^4.16.3",
+    "pg": "^7.4.3",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "sequelize": "^4.38.1",
+    "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.0"
   }
 }
