@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { removeCard, shuffleCards, resetDeck } from '../store';
+import { removeCard, shuffleCards, resetDeck, hit, resetHand } from '../store';
 
 
 
@@ -43,35 +43,13 @@ class Game extends Component {
 
     // Remove the bet slider, Create and shuffle the deck, Deal the cards
     deal(){
-        console.log("The bet is $", this.state.bet);
 
         var shuffleCards = this.props.shuffleCards;
         
         shuffleCards();
 
-        console.log('The deck has been shuffled.')
-
-        var deck = this.props.cards;
-        var hand = this.state.hand;
-
-        // take two cards off the top of the deck and put them into your hand
-        var card1 = deck[deck.length - 1];
-        var card2 = deck[deck.length - 2];
-        hand.push(card1);
-        hand.push(card2);
-        this.props.removeCard();
-        this.props.removeCard();
-
-        // take note of whether you drew an ace
-        if(card1.value == 11){
-            this.setState({ numAces: this.state.numAces + 1 })
-        }
-        if(card2.value == 11){
-            this.setState({ numAces: this.state.numAces + 1 })
-        }
-
-        this.setState({ hand: hand, playerTotal: this.state.playerTotal + card1.value + card2.value })
-        console.log('Total: ', this.state.playerTotal);
+        this.hit();
+        this.hit();
         
         this.setState({ displayBetSlider: false, displayHitButton: true, displayDealButton: false });
     }
@@ -82,7 +60,8 @@ class Game extends Component {
 
         // take a card off the top of the deck and put it into your hand
         var card = deck[deck.length - 1];
-        hand.push(card);
+        //hand.push(card);
+        this.props.hit(card);
         this.props.removeCard();
 
         // take note of whether you drew an ace
@@ -91,7 +70,6 @@ class Game extends Component {
         }
 
         this.setState({ hand: hand, playerTotal: this.state.playerTotal + card.value })
-        console.log('Total: ', this.state.playerTotal);
 
 
         var gameOver = false;
@@ -119,6 +97,7 @@ class Game extends Component {
                 displayHitButton: false,
                 displayPlayAgainButton: true
             });
+            this.props.resetHand();
         }
 
         
@@ -199,7 +178,9 @@ const mapStateToProps = ({ cards })=> {
     return {
       removeCard: (card)=> dispatch(removeCard(card)),
       shuffleCards: ()=> dispatch(shuffleCards()),
-      resetDeck: ()=> dispatch(resetDeck())
+      resetDeck: ()=> dispatch(resetDeck()),
+      hit: (card)=> dispatch(hit(card)),
+      resetHand: ()=> dispatch(resetHand())
     };
   };
   

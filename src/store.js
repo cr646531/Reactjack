@@ -8,6 +8,8 @@ import axios from 'axios';
 const LOAD_CARDS = 'LOAD_CARDS';
 const REMOVE_CARD = 'REMOVE_CARD';
 const SHUFFLE_CARDS = 'SHUFFLE_DECK';
+const HIT = 'HIT';
+const RESET_HAND = 'RESET_HAND';
 
 // ------------------------- //
 
@@ -41,10 +43,30 @@ const cardsReducer = ( state = [], action )=> {
     return state;
 };
 
+// const playerReducer = (state = { bankroll: 100, bet: 0, playerTotal: 0, numAces: 0, hand: [] }, action )=> {
+//     switch(action.type){
+//         case HIT:
+//             state = { hand: hand.push}
+//     }
+// }
+
+const handReducer = ( state = [], action )=> {
+    switch(action.type){
+        case HIT:
+            state = [...state, action.card];
+            break;
+        case RESET_HAND:
+            state = [];
+            break;
+    };
+    return state;
+}
+
 // ------------------------- //
 
 const reducer = combineReducers({
-    cards: cardsReducer
+    cards: cardsReducer,
+    hand: handReducer
 });
 
 export default createStore(reducer, applyMiddleware(thunk, logger));
@@ -63,6 +85,14 @@ const _removeCard = ()=> ({
 const _shuffleCards = ()=> ({
     type: SHUFFLE_CARDS
 })
+const _hit = (card)=> ({
+    type: HIT,
+    card
+});
+
+const _resetHand = ()=> ({
+    type: RESET_HAND
+});
 
 // ------------------------- //
 
@@ -74,7 +104,7 @@ const loadCards = ()=> {
     }
 };
 
-const removeCard = (card)=> {
+const removeCard = ()=> {
     return (dispatch)=> {
         dispatch(_removeCard());
     }
@@ -84,7 +114,19 @@ const shuffleCards = ()=> {
     return (dispatch)=> {
         dispatch(_shuffleCards());
     }
-}
+};
+
+const hit = (card)=> {
+    return (dispatch)=> {
+        dispatch(_hit(card));
+    }
+};
+
+const resetHand = ()=> {
+    return (dispatch)=> {
+        dispatch(_resetHand());
+    }
+};
 
 const resetDeck = ()=> {
     return (dispatch)=> {
@@ -93,4 +135,4 @@ const resetDeck = ()=> {
     }
 }
 
-export { loadCards, removeCard, shuffleCards, resetDeck };
+export { loadCards, removeCard, shuffleCards, resetDeck, hit, resetHand };
