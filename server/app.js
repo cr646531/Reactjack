@@ -2,10 +2,11 @@ const express = require('express');
 const app = express();
 
 const path = require('path');
-const indexFile = path.join(__dirname, 'index.html');
+const indexFile = path.join(__dirname, '..', 'public', 'index.html');
 
-app.use('/dist', express.static(path.join(__dirname, 'dist')));
+app.use('/dist', express.static(path.join(__dirname, '../dist')));
 app.use(express.static('public'));
+
 
 app.get('/', (req, res, next) => res.sendFile(indexFile));
 
