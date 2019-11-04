@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loadCards } from '../store';
+import { loadCards } from '../store/store';
 import { Route, HashRouter as Router } from 'react-router-dom';
 
 import Cards from './Cards';
-import Player from './Player';
 import Game from './Game';
 
 
@@ -16,7 +15,6 @@ class App extends Component{
 
   render(){
       const { cards } = this.props;
-      console.log('App class received "cards" as a property: ', cards);
       
       return (
         <div>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { removeCard } from '../store';
+import { removeCard } from '../store/store';
 
 
 

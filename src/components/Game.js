@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { removeCard, shuffleCards, resetDeck, hit, resetHand } from '../store';
+import { removeCard, shuffleCards, resetDeck, hit, resetHand } from '../store/store';
 
 
 
