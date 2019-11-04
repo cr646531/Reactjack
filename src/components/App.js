@@ -1,16 +1,47 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { loadCards } from '../store';
+import { Route, HashRouter as Router } from 'react-router-dom';
+
+import Cards from './Cards';
 import Player from './Player';
 
-export default class App extends Component{
+
+class App extends Component{
+
+  componentDidMount(){
+    this.props.init();
+  }
 
   render(){
-      var playerHand = '[1, 2]';
+      const { cards } = this.props;
+      console.log('App class received "cards" as a property: ', cards);
       
       return (
         <div>
-            <Player hand={playerHand} />
+          <Router>
+            <div>
+              <Route exact path = '/cards' component = { Cards } />
+              <Route path = '/player' component = { Player } />
+            </div>
+
+          </Router>
         </div>
       
     );
   }
-}
+};
+
+const mapDispatchToProps = (dispatch)=> {
+  return {
+    init: ()=> dispatch(loadCards()),
+  };
+};
+
+const mapStateToProps = ({ cards })=> {
+  return {
+    cards 
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
