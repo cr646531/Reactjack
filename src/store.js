@@ -7,6 +7,7 @@ import axios from 'axios';
 
 const LOAD_CARDS = 'LOAD_CARDS';
 const REMOVE_CARD = 'REMOVE_CARD';
+const SHUFFLE_CARDS = 'SHUFFLE_DECK';
 
 // ------------------------- //
 
@@ -16,7 +17,25 @@ const cardsReducer = ( state = [], action )=> {
             state = action.cards;
             break;
         case REMOVE_CARD:
-            state = state.filter(card => card.id !== action.card.id);
+            state.pop()
+            break;
+        case SHUFFLE_CARDS:
+            var deck = state;
+            var currentIndex = deck.length, temporaryValue, randomIndex;
+      
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+        
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+            
+                // And swap it with the current element.
+                temporaryValue = deck[currentIndex];
+                deck[currentIndex] = deck[randomIndex];
+                deck[randomIndex] = temporaryValue;
+            }
+            state = deck;
             break;
     }
     return state;
@@ -37,10 +56,13 @@ const _loadCards = (cards)=> ({
     cards
 });
 
-const _removeCard = (card)=> ({
-    type: REMOVE_CARD,
-    card
+const _removeCard = ()=> ({
+    type: REMOVE_CARD
 });
+
+const _shuffleCards = ()=> ({
+    type: SHUFFLE_CARDS
+})
 
 // ------------------------- //
 
@@ -54,10 +76,14 @@ const loadCards = ()=> {
 
 const removeCard = (card)=> {
     return (dispatch)=> {
-        return axios.delete(`/data/card/${card.id}`)
-            .then(res => res.data)
-            .then(() => dispatch(_removeCard(card)))
+        dispatch(_removeCard());
     }
 };
 
-export { loadCards, removeCard };
+const shuffleCards = ()=> {
+    return (dispatch)=> {
+        dispatch(_shuffleCards());
+    }
+}
+
+export { loadCards, removeCard, shuffleCards };

@@ -5,6 +5,7 @@ import { Route, HashRouter as Router } from 'react-router-dom';
 
 import Cards from './Cards';
 import Player from './Player';
+import Game from './Game';
 
 
 class App extends Component{
@@ -22,7 +23,7 @@ class App extends Component{
           <Router>
             <div>
               <Route exact path = '/cards' component = { Cards } />
-              <Route path = '/player' component = { Player } />
+              <Route path = '/player' component = { Game } />
             </div>
 
           </Router>
