@@ -86,4 +86,11 @@ const shuffleCards = ()=> {
     }
 }
 
-export { loadCards, removeCard, shuffleCards };
+const resetDeck = ()=> {
+    return (dispatch)=> {
+        return axios.post('/data/reset')
+            .then(()=> dispatch(loadCards()))
+    }
+}
+
+export { loadCards, removeCard, shuffleCards, resetDeck };

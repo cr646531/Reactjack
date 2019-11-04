@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { removeCard, shuffleCards } from '../store';
+import { removeCard, shuffleCards, resetDeck } from '../store';
 
 
 
@@ -29,6 +29,7 @@ class Game extends Component {
         this.deal = this.deal.bind(this);
         this.hit = this.hit.bind(this);
         this.lost = this.lost.bind(this);
+        this.reset = this.reset.bind(this);
     }
 
     // Change the betting amount based on the slider
@@ -142,6 +143,11 @@ class Game extends Component {
         })
     }
 
+    reset(){
+        this.props.resetDeck();
+        this.setState({ displayBetSlider: true, displayDealButton:true, displayBust: false, displayWin: false, displayPlayAgainButton: false })
+    }
+
     
 
     render(){
@@ -174,7 +180,7 @@ class Game extends Component {
                 { displayHitButton && ( <button onClick={ this.hit }>Hit Me</button> ) }
                 { displayBust && ( <h1>Busted!</h1> ) }
                 <br />
-                { displayPlayAgainButton && ( <button>Play Again?</button> )}
+                { displayPlayAgainButton && ( <button onClick={ this.reset }>Play Again?</button> )}
 
                 
             </div>
@@ -192,7 +198,8 @@ const mapStateToProps = ({ cards })=> {
   const mapDispatchToProps = (dispatch)=> {
     return {
       removeCard: (card)=> dispatch(removeCard(card)),
-      shuffleCards: ()=> dispatch(shuffleCards())
+      shuffleCards: ()=> dispatch(shuffleCards()),
+      resetDeck: ()=> dispatch(resetDeck())
     };
   };
   

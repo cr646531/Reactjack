@@ -20,6 +20,12 @@ app.get('/data/cards', (req, res, next)=> {
       .catch(next);
 });
 
+app.post('/data/reset', (req, res, next)=> {
+  db.syncAndSeed()
+    .then(()=> res.sendStatus(204))
+    .catch(next);
+});
+
 app.delete('/data/card/:id', (req, res, next)=> {
     Card.findById(req.params.id)
       .then( card => card.destroy() )
