@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon server"
+    "webpack": "./node_modules/webpack/bin/webpack.js",
+    "start:dev": "npm run webpack -- --watch --mode=development & nodemon server --ignore src/ --ignore dist/"
   },
   "author": "",
   "license": "ISC",
