@@ -14,9 +14,12 @@ app.use(require('body-parser').json());
 
 app.get('/', (req, res, next) => res.sendFile(indexFile));
 
+const shuffle = require('./shuffle');
+
 app.get('/data/cards', (req, res, next)=> {
     Card.findAll()
-      .then(cards => res.send(cards))
+      .then(cards => shuffle(cards))
+      .then(deck => res.send(deck))
       .catch(next);
 });
 

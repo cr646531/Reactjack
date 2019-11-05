@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loadCards } from '../store/store';
 import { Route, HashRouter as Router } from 'react-router-dom';
 
-import Cards from './Cards';
-import Game from './Game';
+import { loadDeck } from '../store';
+
+import Bet from './Bet';
 
 
 class App extends Component{
@@ -14,16 +14,14 @@ class App extends Component{
   }
 
   render(){
-      const { cards } = this.props;
-      
       return (
         <div>
+          <h1>Blackjack</h1>
+          <hr />
           <Router>
             <div>
-              <Route exact path = '/cards' component = { Cards } />
-              <Route path = '/player' component = { Game } />
+              <Route path = '/play' component = { Bet } />
             </div>
-
           </Router>
         </div>
       
@@ -33,14 +31,8 @@ class App extends Component{
 
 const mapDispatchToProps = (dispatch)=> {
   return {
-    init: ()=> dispatch(loadCards()),
+    init: ()=> dispatch(loadDeck()),
   };
 };
 
-const mapStateToProps = ({ cards })=> {
-  return {
-    cards 
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);

@@ -1,14 +1,17 @@
-const HIT = 'HIT';
-const RESET_HAND = 'RESET_HAND';
+const initialState = {
+    playerHand: [],
+    dealerHand: [],
+    playerTotal: 0,
+    dealerTotal: 0
+};
 
-export const handReducer = ( state = [], action )=> {
+export const handReducer = ( state = initialState, action )=> {
     switch(action.type){
-        case HIT:
-            state = [...state, action.card];
-            break;
-        case RESET_HAND:
-            state = [];
-            break;
-    };
+        case 'PLAYER_HIT':
+            return Object.assign({}, state, {
+                playerHand: [...state.playerHand, action.card]
+            });
+    }
+
     return state;
 }
