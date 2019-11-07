@@ -57,17 +57,15 @@ const reducer = (state = initialState, action)=> {
                 numAces: action.obj.numAces,
                 deck: action.obj.deck
             });
+        case 'DEALERS_TURN':
+            return Object.assign({}, state, {
+                dealerHand: [...state.dealerHand].concat(action.obj.cards),
+                dealerTotal: action.obj.dealerTotal,
+                dealerNumAces: action.obj.dealerNumAces,
+                deck: action.obj.deck
+            });
             
 
-        case 'GET_TOP_CARD':
-            return Object.assign({}, state, {
-                topCard: state.deck[0]
-            });
-        
-        case 'PLACE_BET':
-            return Object.assign({}, state, {
-                bet: action.bet
-            });
         case 'GAME_OVER':
             return Object.assign({}, state, {
                 playerHand: [],
@@ -145,8 +143,8 @@ const _playerWins = ()=> ({
     type: 'PLAYER_WINS'
 });
 
-const _dealerHit = (obj)=> ({
-    type: 'DEALER_HIT',
+const _dealersTurn = (obj)=> ({
+    type: 'DEALERS_TURN',
     obj
 });
 
@@ -209,9 +207,9 @@ const playerWins = ()=> {
     }
 }
 
-const dealerHit = (obj)=> {
+const dealersTurn = (obj)=> {
     return (dispatch)=> {
-        dispatch(_dealerHit(obj));
+        dispatch(_dealersTurn(obj));
     }
 }
 
@@ -223,5 +221,5 @@ const push = ()=> {
 
 // export actions
 
-export { loadDeck, playerHit, placeBet, deal, getTopCard, gameOver, playerLoses, playerWins, dealerHit, push };
+export { loadDeck, playerHit, placeBet, deal, getTopCard, gameOver, playerLoses, playerWins, dealersTurn, push };
 

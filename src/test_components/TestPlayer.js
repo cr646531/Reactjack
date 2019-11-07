@@ -14,6 +14,7 @@ class Player extends Component{
         }
         this.hit = this.hit.bind(this);
         this.reset = this.reset.bind(this);
+        this.dealersTurn = this.dealersTurn.bind(this);
     }
 
     hit(){
@@ -47,6 +48,33 @@ class Player extends Component{
         } else {
             this.props.playerHit({ card: card, deck: deck, playerTotal: playerTotal, playerNumAces: playerNumAces })
         }
+    }
+
+    dealersTurn(){
+        var deck = this.props.deck;
+
+        var dealerTotal = this.props.dealerTotal;
+        var dealerNumAces = this.props.dealerNumAces;
+        
+        var index = 0;
+        while(dealerTotal < 17){
+            if(deck[index].value == 11){
+                dealerNumAces++;
+            }
+            dealerTotal += deck[index].value;
+            if(dealerTotal > 21 && dealerNumAces > 0){
+                dealerNumAces--;
+                dealerTotal -= 10;
+            }
+            index++;
+        }
+
+        var cards = deck.slice(0, index);
+        deck = deck.slice(index);
+
+        this.props.dealersTurn({ cards: cards, dealerTotal: dealerTotal, dealerNumAces: dealerNumAces, deck: deck })
+
+        // call a new function to check win conditions
     }
     
 
@@ -124,7 +152,7 @@ class Player extends Component{
                     this.state.displayButtons && (
                         <div>
                             <button onClick={this.hit}>Hit Me</button>
-                            <button onClick={this.dealerTurn}>Stay</button>
+                            <button onClick={this.dealersTurn}>Stay</button>
                             <button>Double-down</button>
                         </div>
                     )
@@ -177,17 +205,20 @@ const mapStateToProps = (state)=> {
         playerHand: state.playerHand,
         playerTotal: state.playerTotal,
         playerNumAces: state.playerNumAces,
+        dealerHand: state.dealerHand,
+        dealerTotal: state.dealerTotal,
+        dealerNumAces: state.dealerNumAces,
         deck: state.deck
     }
 };
 
 //import { playerHit, getTopCard, gameOver, playerLoses, playerWins, dealerHit, push } from '../store';
-import { playerHit, getTopCard, gameOver, playerLoses, playerWins, dealerHit, push } from '../test_store';
+import { playerHit, getTopCard, gameOver, playerLoses, playerWins, dealersTurn, push } from '../test_store';
 
 const mapDispatchToProps = (dispatch)=> {
     return {
         playerHit: (obj)=> dispatch(playerHit(obj)),
-        dealerHit: (cards)=> dispatch(dealerHit(cards)),
+        dealersTurn: (obj)=> dispatch(dealersTurn(obj)),
         getTopCard: ()=> dispatch(getTopCard()),
         gameOver: ()=> dispatch(gameOver()),
         playerLoses: ()=> dispatch(playerLoses()),

@@ -44,11 +44,11 @@ const mapStateToProps = (state)=> {
     }
 };
 
-import { dealerHit, playerWins, playerLoses } from '../test_store';
+import { dealersTurn, playerWins, playerLoses } from '../test_store';
 
 const mapDispatchToProps = (dispatch)=> {
     return {
-        dealerHit: ()=> dispatch(dealerHit()),
+        dealersTurn: ()=> dispatch(dealersTurn()),
         playerWins: ()=> dispatch(playerWins()),
         playerLoses: ()=> dispatch(playerLoses())
     };
