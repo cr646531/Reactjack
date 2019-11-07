@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, HashRouter as Router } from 'react-router-dom';
 
-import Bet from './Bet';
+import TestBet from './TestBet';
 
 
 class App extends Component{
@@ -18,7 +18,7 @@ class App extends Component{
           <hr />
           <Router>
             <div>
-              <Route path = '/play' component = { Bet } />
+              <Route path = '/play' component = { TestBet } />
             </div>
           </Router>
         </div>
@@ -27,7 +27,7 @@ class App extends Component{
   }
 };
 
-import { loadDeck } from '../store';
+import { loadDeck } from '../test_store';
 
 const mapDispatchToProps = (dispatch)=> {
   return {
