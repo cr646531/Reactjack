@@ -9,19 +9,24 @@ class Bet extends Component{
         super();
         this.state = {
             bet: 0,
-            displayBetSlider: true
+            displayBetSlider: true,
+            displayPlayerAndUser: false,
+            displayBlackjack: false
         }
         this.toggleBet = this.toggleBet.bind(this);
         this.deal = this.deal.bind(this);
         this.takeBets = this.takeBets.bind(this);
+        this.checkBlackjack = this.checkBlackjack.bind(this);
     }
 
     // passed to player component
     takeBets(){
         this.setState({
             displayBetSlider: true,
+            displayBlackjack: false,
             bet: 0
         })
+        this.props.gameOver();
     }
 
     toggleBet(event){
@@ -31,18 +36,29 @@ class Bet extends Component{
         });
     }
 
+    checkBlackjack(){
+        var deck = this.props.deck;
+
+        if(deck[0].value + deck[1].value == 21){
+            this.setState({ displayBetSlider: false, displayBlackjack: true })
+            this.deal();
+            this.props.blackjack();
+        } else {
+            this.deal();
+        }
+    }
+
     deal(){
-        this.setState({ displayBetSlider: false })
+        this.setState({ displayBetSlider: false, displayPlayerAndDealer: true })
 
         var deck = this.props.deck;
-        var bet = this.state.bet * 1;
 
         var playerHand = [];
         var playerTotal = 0;
         var playerNumAces = 0;
 
         // special case - player is dealt two Aces
-        if(deck[0].rank == 'Ace' && deck[0].rank == 'Ace'){
+        if(deck[0].rank == 'Ace' && deck[1].rank == 'Ace'){
             playerTotal = 12;
             playerNumAces = 1;
         } else if(deck[0].rank == 'Ace' || deck[1].rank == 'Ace') {
@@ -65,6 +81,7 @@ class Bet extends Component{
         playerHand = deck.slice(0, 2);
         dealerHand = deck.slice(2, 3);
         deck = deck.slice(3);
+        var bet = this.state.bet * 1;
 
         this.props.deal({
             playerHand: playerHand,
@@ -90,7 +107,7 @@ class Bet extends Component{
                             <form >
                                 <input type="range" min="1" max={this.props.bankroll} name="bet" default="1" onChange={this.toggleBet}/>
                             </form>
-                            <button onClick={this.deal}>Deal</button>
+                            <button onClick={this.checkBlackjack}>Deal</button>
                         </div>
                     ) : (
                         <div>
@@ -99,7 +116,16 @@ class Bet extends Component{
                             <TestDealer />
                             <br />
                             <hr />
-                            <TestPlayer takeBets={this.takeBets} />
+                            <TestPlayer takeBets={this.takeBets} displayBlackjack={this.state.displayBlackjack} />
+                            {
+                                this.state.displayBlackjack && (
+                                    <div>
+                                        <h1>Blackjack!</h1>
+                                        <br />
+                                        <button onClick={this.takeBets}>Play again?</button>
+                                    </div>
+                                )
+                            }
                         </div>
                     )
                 }
@@ -120,11 +146,13 @@ const mapStateToProps = (state) => {
     }
 }
 
-import { deal } from '../test_store';
+import { deal, gameOver, blackjack } from '../test_store';
 
 const mapDispatchToProps = (dispatch)=> {
     return {
-        deal: (obj)=> dispatch(deal(obj))
+        deal: (obj)=> dispatch(deal(obj)),
+        gameOver: ()=> dispatch(gameOver()),
+        blackjack: ()=> dispatch(blackjack())
     };
 };
 

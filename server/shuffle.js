@@ -17,4 +17,12 @@ const shuffle = (deck) => {
     return deck;
 };
 
-module.exports = shuffle;
+const rig = (deck) => {
+    deck.reverse();
+    return deck;
+}
+
+module.exports = {
+    shuffle, 
+    rig
+}

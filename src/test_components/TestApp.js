@@ -27,11 +27,11 @@ class App extends Component{
   }
 };
 
-import { loadDeck } from '../test_store';
+import { loadDeck, loadRiggedDeck } from '../test_store';
 
 const mapDispatchToProps = (dispatch)=> {
   return {
-    init: ()=> dispatch(loadDeck()),
+    init: ()=> dispatch(loadRiggedDeck()),
   };
 };
 

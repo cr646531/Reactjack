@@ -15,6 +15,7 @@ class Player extends Component{
         this.hit = this.hit.bind(this);
         this.reset = this.reset.bind(this);
         this.dealersTurn = this.dealersTurn.bind(this);
+        this.checkWinConditions = this.checkWinConditions.bind(this);
     }
 
     hit(){
@@ -75,64 +76,32 @@ class Player extends Component{
         this.props.dealersTurn({ cards: cards, dealerTotal: dealerTotal, dealerNumAces: dealerNumAces, deck: deck })
 
         // call a new function to check win conditions
+        this.checkWinConditions();
     }
-    
 
-    // dealerTurn(){
-    //     let deck = this.props.deck;
-    //     var total = this.props.dealerTotal;
-    //     var aces = 0;
+    checkWinConditions(){
+        var playerTotal = this.props.playerTotal;
+        var dealerTotal = this.props.dealerTotal;
 
-    //     var index = 0;
-    //     while(total < 17){
-    //         if(deck[index].value == 11){
-    //             aces++;
-    //         }
-    //         total += deck[index].value;
-    //         if(total > 21 && aces > 0){
-    //             aces--;
-    //             total -= 10;
-    //         }
-    //         index++;
-    //     }
-
-    //     var cards = deck.slice(0, index);
-    //     var sum = 0;
-    //     aces = 0;
-    //     for(var i = 0; i < cards.length; i++){
-    //         if(cards[i].value == 11){
-    //             aces++;
-    //         }
-    //         sum += cards[i].value;
-    //         if(sum > 21 && aces > 0){
-    //             aces--;
-    //             sum -= 10;
-    //         }
-    //     }
-
-    //     if(this.props.dealerTotal + sum > 21){
-    //         this.props.dealerHit({cards: cards, sum: sum});
-    //         this.props.playerWins();
-    //         this.setState({ displayButtons: false, displayWin: true });
-    //     } else if(this.props.dealerTotal + sum > this.props.playerTotal){
-    //         this.props.dealerHit({cards: cards, sum: sum});
-    //         this.props.playerLoses();
-    //         this.setState({ displayButtons: false, displayLose: true });
-    //     } else if(this.props.dealerTotal + sum < this.props.playerTotal){
-    //         this.props.playerWins();
-    //         this.setState({ displayButtons: false, displayWin: true });
-    //     } else {
-    //         this.props.dealerHit({cards: cards, sum: sum});
-    //         this.props.push();
-    //         this.setState({ displayButtons: false, displayPush: true });
-    //     }
-    // }
+        if(dealerTotal > 21){
+            this.props.playerWins();
+            this.setState({ displayButtons: false, displayWin: true });
+        } else if(dealerTotal > playerTotal){
+            this.props.playerLoses();
+            this.setState({ displayButtons: false, displayLose: true });
+        } else if(dealerTotal < playerTotal){
+            this.props.playerWins();
+            this.setState({ displayButtons: false, displayWin: true });
+        } else {
+            this.props.push();
+            this.setState({ displayButtons: false, displayPush: true });
+        }
+    }
 
     reset(){
-        this.setState({ displayButtons: true });
+        this.setState({ displayButtons: true, displayBusted: false, displayWin: false, displayLose: false, displayPush: false });
         // take bets is passed down from the bet component
         this.props.takeBets();
-        this.props.gameOver();
     }
 
     render(){
@@ -149,7 +118,7 @@ class Player extends Component{
                 </ul>
                 <br />
                 {
-                    this.state.displayButtons && (
+                    this.state.displayButtons && !this.props.displayBlackjack && (
                         <div>
                             <button onClick={this.hit}>Hit Me</button>
                             <button onClick={this.dealersTurn}>Stay</button>
@@ -193,6 +162,15 @@ class Player extends Component{
                         </div>
                     )
                 }
+                {
+                    this.props.blackjack && (
+                        <div>
+                            <h1>Blackjack!</h1>
+                            <br />
+                            <button onClick={this.reset}>Play again?</button>
+                        </div>
+                    )
+                }
             </div>
         )
     }
@@ -219,8 +197,6 @@ const mapDispatchToProps = (dispatch)=> {
     return {
         playerHit: (obj)=> dispatch(playerHit(obj)),
         dealersTurn: (obj)=> dispatch(dealersTurn(obj)),
-        getTopCard: ()=> dispatch(getTopCard()),
-        gameOver: ()=> dispatch(gameOver()),
         playerLoses: ()=> dispatch(playerLoses()),
         playerWins: ()=> dispatch(playerWins()),
         push: ()=> dispatch(push())
