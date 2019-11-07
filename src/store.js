@@ -7,11 +7,13 @@ import axios from 'axios';
 const initialState = {
     deck: [],
     topCard: {},
+    numAces: 0,
 
     playerHand: [],
     playerTotal: 0,
     dealerHand: [],
     dealerTotal: 0,
+    temp: [],
 
     bankroll: 100,
     bet: 0
@@ -29,8 +31,9 @@ const reducer = (state = initialState, action)=> {
             });
         case 'PLAYER_HIT':
             return Object.assign({}, state, {
-                playerHand: [...state.playerHand, state.deck[0]],
-                playerTotal: state.playerTotal + state.deck[0].value,
+                playerHand: [...state.playerHand, action.obj.card],
+                playerTotal: state.playerTotal + action.obj.card.value,
+                numAces: state.numAces + action.obj.ace,
                 topCard: state.deck[1],
                 deck: [...state.deck.slice(1)]
                 
@@ -42,7 +45,8 @@ const reducer = (state = initialState, action)=> {
         case 'DEAL':
             return Object.assign({}, state, {
                 playerHand: [...state.playerHand, state.deck[0], state.deck[1]],
-                playerTotal: state.playerTotal + state.deck[0].value + state.deck[1].value,
+                playerTotal: state.playerTotal + state.deck[0].value + state.deck[1].value - action.obj.offset,
+                numAces: action.obj.numAces,
                 dealerHand: [...state.dealerHand, state.deck[2]],
                 dealerTotal: state.dealerTotal + state.deck[2].value,
                 topCard: state.deck[3],
@@ -63,10 +67,19 @@ const reducer = (state = initialState, action)=> {
                 bet: 0
             });
         case 'PLAYER_WINS':
-                return Object.assign({}, state, {
-                    bankroll: state.bankroll + state.bet,
-                    bet: 0
-                });
+            return Object.assign({}, state, {
+                bankroll: state.bankroll + state.bet,
+                bet: 0
+            });
+        case 'DEALER_HIT':
+            return Object.assign({}, state, {
+                dealerHand: [...state.dealerHand].concat(action.obj.cards),
+                dealerTotal: state.dealerTotal + action.obj.sum
+            });
+        case 'PUSH':
+            return Object.assign({}, state, {
+                bet: 0
+            });
         default:
             return state;
     };
@@ -86,8 +99,9 @@ const _loadDeck = (deck)=> ({
     deck
 });
 
-const _playerHit = ()=> ({
-    type: 'PLAYER_HIT'
+const _playerHit = (obj)=> ({
+    type: 'PLAYER_HIT',
+    obj
 });
 
 const _placeBet = (bet)=> ({
@@ -95,8 +109,9 @@ const _placeBet = (bet)=> ({
     bet
 });
 
-const _deal = ()=> ({
-    type: 'DEAL'
+const _deal = (obj)=> ({
+    type: 'DEAL',
+    obj
 });
 
 const _getTopCard = ()=> ({
@@ -116,6 +131,15 @@ const _playerWins = ()=> ({
     type: 'PLAYER_WINS'
 });
 
+const _dealerHit = (obj)=> ({
+    type: 'DEALER_HIT',
+    obj
+});
+
+const _push = ()=> ({
+    type: 'PUSH'
+})
+
 // action dispatch
 
 const loadDeck = ()=> {
@@ -126,9 +150,9 @@ const loadDeck = ()=> {
     };
 };
 
-const playerHit = ()=> {
+const playerHit = (obj)=> {
     return (dispatch) => {
-        dispatch(_playerHit());
+        dispatch(_playerHit(obj));
     };
 };
 
@@ -138,9 +162,9 @@ const placeBet = (bet)=> {
     };
 };
 
-const deal = ()=> {
+const deal = (obj)=> {
     return (dispatch)=> {
-        dispatch(_deal());
+        dispatch(_deal(obj));
     }
 };
 
@@ -170,7 +194,19 @@ const playerWins = ()=> {
     }
 }
 
+const dealerHit = (obj)=> {
+    return (dispatch)=> {
+        dispatch(_dealerHit(obj));
+    }
+}
+
+const push = ()=> {
+    return (dispatch)=> {
+        dispatch(_push());
+    }
+}
+
 // export actions
 
-export { loadDeck, playerHit, placeBet, deal, getTopCard, gameOver, playerLoses, playerWins };
+export { loadDeck, playerHit, placeBet, deal, getTopCard, gameOver, playerLoses, playerWins, dealerHit, push };
 

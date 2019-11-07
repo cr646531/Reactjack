@@ -27,8 +27,25 @@ class Bet extends Component{
         this.setState({
             displayBetSlider: false
         })
-        this.props.placeBet(this.state.bet);
-        this.props.deal();
+        this.props.placeBet(this.state.bet * 1);
+
+        var numAces = 0;
+        var offset = 0;
+
+        if(this.props.deck[0].value == 11 && this.props.deck[1].value == 11){
+            numAces = 1;
+            offset = 10;
+        }
+
+        if(this.props.deck[0].value == 11){
+            numAces = 1;
+        } else if(this.props.deck[1].value == 11){
+            numAces = 1
+        }
+
+        console.log('offset: ', offset);
+        console.log('numAces: ', numAces);
+        this.props.deal({ numAces: numAces, offset: offset});
     }
 
     takeBets(){
@@ -48,7 +65,7 @@ class Bet extends Component{
                     this.state.displayBetSlider ? (
                         <div className="slidecontainer">
                             <form >
-                                <input type="range" min="1" max={this.state.bankroll} name="bet" default="1" onChange={this.toggleBet}/>
+                                <input type="range" min="1" max={this.props.bankroll} name="bet" default="1" onChange={this.toggleBet}/>
                             </form>
                             <button onClick={this.placeBet}>Deal</button>
                         </div>
@@ -77,14 +94,15 @@ import { placeBet, deal } from '../store';
 const mapStateToProps = (state) => {
     return {
         bet: state.bet,
-        bankroll: state.bankroll
+        bankroll: state.bankroll,
+        deck: state.deck
     }
 }
 
 const mapDispatchToProps = (dispatch)=> {
     return {
         placeBet: (bet)=> dispatch(placeBet(bet)),
-        deal: ()=> dispatch(deal())
+        deal: (obj)=> dispatch(deal(obj))
     };
 };
 

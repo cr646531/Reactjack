@@ -1,36 +1,57 @@
-import React from 'react';
+import React, { Component} from 'react';
 import { connect } from 'react-redux';
 
-const Dealer = ({ dealerHand, dealerTotal }) => {
+class Dealer extends Component{
 
-    return (
-        <div>
+    dealerTurn(){
+        this.props.dealerHit();
+        var total = this.props.dealerTotal;
 
-            <h1>Dealer's Hand ({dealerTotal}): </h1>
-            <ul>
-                {
-                    dealerHand.map(card => (
-                        <li key={card.id} >{card.rank} of {card.suit}</li>
-                    ))
-                }
-            </ul>
-        </div>
-    )
+        if(total < 16){
+            this.dealerTurn();
+        } else if(total > 21) {
+            this.props.playerWins();
+        } else if(total == 21) {
+            if(playerTotal == 21){
+                //push
+            } else {
+                this.props.playerLoses();
+            }
+        }
+    }
+
+    render(){
+        return (
+            <div>
+                <h1>Dealer's Hand ({this.props.dealerTotal}): </h1>
+                <ul>
+                    {
+                        this.props.dealerHand.map(card => (
+                            <li key={card.id} >{card.rank} of {card.suit}</li>
+                        ))
+                    }
+                </ul>
+            </div>
+        );
+    };  
 };
 
 const mapStateToProps = (state)=> {
     return {
         dealerHand: state.dealerHand,
-        dealerTotal: state.dealerTotal
+        dealerTotal: state.dealerTotal,
+        playerTotal: state.playerTotal
     }
 };
 
-import { playerHit } from '../store';
+import { dealerHit, playerWins, playerLoses } from '../store';
 
-// const mapDispatchToProps = (dispatch)=> {
-//     return {
-//         playerHit: ()=> dispatch(playerHit())
-//     };
-// };
+const mapDispatchToProps = (dispatch)=> {
+    return {
+        dealerHit: ()=> dispatch(dealerHit()),
+        playerWins: ()=> dispatch(playerWins()),
+        playerLoses: ()=> dispatch(playerLoses())
+    };
+};
 
-export default connect(mapStateToProps)(Dealer);
+export default connect(mapStateToProps, mapDispatchToProps)(Dealer);
