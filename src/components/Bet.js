@@ -9,11 +9,24 @@ class Bet extends Component{
         super();
         this.state = {
             bet: 0,
-            displayBetSlider: true
+            displayBetSlider: true,
+            displayPlayerAndUser: false,
+            displayBlackjack: false
         }
         this.toggleBet = this.toggleBet.bind(this);
-        this.placeBet = this.placeBet.bind(this);
+        this.deal = this.deal.bind(this);
         this.takeBets = this.takeBets.bind(this);
+        this.checkBlackjack = this.checkBlackjack.bind(this);
+    }
+
+    // passed to player component
+    takeBets(){
+        this.setState({
+            displayBetSlider: true,
+            displayBlackjack: false,
+            bet: 0
+        })
+        this.props.gameOver();
     }
 
     toggleBet(event){
@@ -23,36 +36,63 @@ class Bet extends Component{
         });
     }
 
-    placeBet(){
-        this.setState({
-            displayBetSlider: false
-        })
-        this.props.placeBet(this.state.bet * 1);
+    checkBlackjack(){
+        var deck = this.props.deck;
 
-        var numAces = 0;
-        var offset = 0;
-
-        if(this.props.deck[0].value == 11 && this.props.deck[1].value == 11){
-            numAces = 1;
-            offset = 10;
+        if(deck[0].value + deck[1].value == 21){
+            this.setState({ displayBetSlider: false, displayBlackjack: true })
+            this.deal();
+            this.props.blackjack();
+        } else {
+            this.deal();
         }
-
-        if(this.props.deck[0].value == 11){
-            numAces = 1;
-        } else if(this.props.deck[1].value == 11){
-            numAces = 1
-        }
-
-        console.log('offset: ', offset);
-        console.log('numAces: ', numAces);
-        this.props.deal({ numAces: numAces, offset: offset});
     }
 
-    takeBets(){
-        this.setState({
-            displayBetSlider: true,
-            bet: 0
-        })
+    deal(){
+        this.setState({ displayBetSlider: false, displayPlayerAndDealer: true })
+
+        var deck = this.props.deck;
+
+        var playerHand = [];
+        var playerTotal = 0;
+        var playerNumAces = 0;
+
+        // special case - player is dealt two Aces
+        if(deck[0].rank == 'Ace' && deck[1].rank == 'Ace'){
+            playerTotal = 12;
+            playerNumAces = 1;
+        } else if(deck[0].rank == 'Ace' || deck[1].rank == 'Ace') {
+            playerTotal = deck[0].value + deck[1].value;
+            playerNumAces = 1;
+        } else {
+            playerTotal = deck[0].value + deck[1].value;
+            playerNumAces = 0;
+        }
+
+        var dealerHand = [];
+        var dealerTotal = 0;
+        var dealerNumAces = 0;
+
+        if(deck[2].rank == 'Ace'){
+            dealerNumAces = 1;
+        }
+        dealerTotal = deck[2].value;
+
+        playerHand = deck.slice(0, 2);
+        dealerHand = deck.slice(2, 3);
+        deck = deck.slice(3);
+        var bet = this.state.bet * 1;
+
+        this.props.deal({
+            playerHand: playerHand,
+            playerTotal: playerTotal,
+            playerNumAces: playerNumAces,
+            dealerHand: dealerHand,
+            dealerTotal: dealerTotal,
+            dealerNumAces: dealerNumAces,
+            deck: deck,
+            bet: bet
+        });
     }
 
     render(){
@@ -67,7 +107,7 @@ class Bet extends Component{
                             <form >
                                 <input type="range" min="1" max={this.props.bankroll} name="bet" default="1" onChange={this.toggleBet}/>
                             </form>
-                            <button onClick={this.placeBet}>Deal</button>
+                            <button onClick={this.checkBlackjack}>Deal</button>
                         </div>
                     ) : (
                         <div>
@@ -76,7 +116,16 @@ class Bet extends Component{
                             <Dealer />
                             <br />
                             <hr />
-                            <Player takeBets={this.takeBets} />
+                            <Player takeBets={this.takeBets} displayBlackjack={this.state.displayBlackjack} />
+                            {
+                                this.state.displayBlackjack && (
+                                    <div>
+                                        <h1>Blackjack!</h1>
+                                        <br />
+                                        <button onClick={this.takeBets}>Play again?</button>
+                                    </div>
+                                )
+                            }
                         </div>
                     )
                 }
@@ -89,8 +138,6 @@ class Bet extends Component{
 }
 
 
-import { placeBet, deal } from '../store';
-
 const mapStateToProps = (state) => {
     return {
         bet: state.bet,
@@ -99,10 +146,13 @@ const mapStateToProps = (state) => {
     }
 }
 
+import { deal, gameOver, blackjack } from '../store';
+
 const mapDispatchToProps = (dispatch)=> {
     return {
-        placeBet: (bet)=> dispatch(placeBet(bet)),
-        deal: (obj)=> dispatch(deal(obj))
+        deal: (obj)=> dispatch(deal(obj)),
+        gameOver: ()=> dispatch(gameOver()),
+        blackjack: ()=> dispatch(blackjack())
     };
 };
 

@@ -12,102 +12,102 @@ class Player extends Component{
             displayLose: false,
             displayPush: false
         }
-        this.totalCheck = this.totalCheck.bind(this);
+        this.hit = this.hit.bind(this);
         this.reset = this.reset.bind(this);
-        this.dealerTurn = this.dealerTurn.bind(this);
+        this.dealersTurn = this.dealersTurn.bind(this);
+        this.checkWinConditions = this.checkWinConditions.bind(this);
     }
-    
 
-    totalCheck(){
-        var nextCard = this.props.topCard;
-        var numAces = this.props.numAces;
-        var ace = 0;
+    hit(){
+        var playerTotal = this.props.playerTotal;
+        var playerNumAces = this.props.playerNumAces;
+        var deck = this.props.deck;
 
-        if(nextCard.value == 11){
-            ace = 1;
-        }
+        var card = deck[0];
+        if(card.rank == 'Ace'){ 
+            playerNumAces++ 
+        };
 
-        if(this.props.playerTotal + nextCard.value == 21){
+        deck = deck.slice(1);
+
+        playerTotal += card.value;
+
+        if(playerTotal == 21){
             this.setState({ displayButtons: false });
-            this.props.playerHit({ card: nextCard, ace: ace});
-            this.dealerTurn();
-        } else if(this.props.playerTotal + nextCard.value > 21){
-            if(ace == 1){
-                ace = 0;
-                nextCard.value = 1;
-            } else if(numAces > 0) {
-                ace = -1;
-                nextCard.value -= 10;
+            this.props.playerHit({ card: card, deck: deck, playerTotal: playerTotal, playerNumAces: playerNumAces });
+            // dealer's turn
+        } else if(playerTotal > 21){
+            if(playerNumAces > 0){
+                playerNumAces--;
+                playerTotal -= 10;
+                this.props.playerHit({ card: card, deck: deck, playerTotal: playerTotal, playerNumAces: playerNumAces })
+            } else {
+                this.setState({ displayButtons: false, displayBusted: true})
+                this.props.playerHit({ card: card, deck: deck, playerTotal: playerTotal, playerNumAces: playerNumAces })
+                this.props.playerLoses();
             }
-            this.setState({ displayButtons: false, displayBusted: true });
-            this.props.playerHit({ card: nextCard, ace: ace});
-            this.props.playerLoses();
         } else {
-            this.props.playerHit({ card: nextCard, ace: ace});
+            this.props.playerHit({ card: card, deck: deck, playerTotal: playerTotal, playerNumAces: playerNumAces })
         }
     }
 
-    dealerTurn(){
-        let deck = this.props.deck;
-        var total = this.props.dealerTotal;
-        var aces = 0;
+    dealersTurn(){
+        var deck = this.props.deck;
 
+        var dealerTotal = this.props.dealerTotal;
+        var dealerNumAces = this.props.dealerNumAces;
+        
         var index = 0;
-        while(total < 17){
+        while(dealerTotal < 17){
             if(deck[index].value == 11){
-                aces++;
+                dealerNumAces++;
             }
-            total += deck[index].value;
-            if(total > 21 && aces > 0){
-                aces--;
-                total -= 10;
+            dealerTotal += deck[index].value;
+            if(dealerTotal > 21 && dealerNumAces > 0){
+                dealerNumAces--;
+                dealerTotal -= 10;
             }
             index++;
         }
 
         var cards = deck.slice(0, index);
-        var sum = 0;
-        aces = 0;
-        for(var i = 0; i < cards.length; i++){
-            if(cards[i].value == 11){
-                aces++;
-            }
-            sum += cards[i].value;
-            if(sum > 21 && aces > 0){
-                aces--;
-                sum -= 10;
-            }
-        }
+        deck = deck.slice(index);
 
-        if(this.props.dealerTotal + sum > 21){
+        this.props.dealersTurn({ cards: cards, dealerTotal: dealerTotal, dealerNumAces: dealerNumAces, deck: deck })
+
+        // call a new function to check win conditions
+        this.checkWinConditions(dealerTotal);
+    }
+
+    checkWinConditions(dealerTotal){
+        var playerTotal = this.props.playerTotal;
+
+        console.log('playerTotal: ', playerTotal);
+        console.log('dealerTotal: ', dealerTotal);
+
+        if(dealerTotal > 21){
             this.props.playerWins();
             this.setState({ displayButtons: false, displayWin: true });
-            this.props.dealerHit({cards: cards, sum: sum});
-        } else if(this.props.dealerTotal + sum > this.props.playerTotal){
+            console.log('1')
+        } else if(dealerTotal > playerTotal){
             this.props.playerLoses();
             this.setState({ displayButtons: false, displayLose: true });
-            this.props.dealerHit({cards: cards, sum: sum});
-        } else if(this.props.dealerTotal + sum < this.props.playerTotal){
+            console.log('2');
+        } else if(dealerTotal < playerTotal){
             this.props.playerWins();
             this.setState({ displayButtons: false, displayWin: true });
+            console.log('3')
         } else {
             this.props.push();
             this.setState({ displayButtons: false, displayPush: true });
-            this.props.dealerHit({cards: cards, sum: sum});
+            console.log('4')
         }
-        
-
-
-
-
-        
     }
 
     reset(){
-        this.setState({ displayButtons: true });
+        this.setState({ displayButtons: true, displayBusted: false, displayWin: false, displayLose: false, displayPush: false });
         // take bets is passed down from the bet component
         this.props.takeBets();
-        this.props.gameOver();
     }
 
     render(){
@@ -124,10 +124,10 @@ class Player extends Component{
                 </ul>
                 <br />
                 {
-                    this.state.displayButtons && (
+                    this.state.displayButtons && !this.props.displayBlackjack && (
                         <div>
-                            <button onClick={this.totalCheck}>Hit Me</button>
-                            <button onClick={this.dealerTurn}>Stay</button>
+                            <button onClick={this.hit}>Hit Me</button>
+                            <button onClick={this.dealersTurn}>Stay</button>
                             <button>Double-down</button>
                         </div>
                     )
@@ -168,6 +168,15 @@ class Player extends Component{
                         </div>
                     )
                 }
+                {
+                    this.props.blackjack && (
+                        <div>
+                            <h1>Blackjack!</h1>
+                            <br />
+                            <button onClick={this.reset}>Play again?</button>
+                        </div>
+                    )
+                }
             </div>
         )
     }
@@ -179,21 +188,21 @@ const mapStateToProps = (state)=> {
     return {
         playerHand: state.playerHand,
         playerTotal: state.playerTotal,
-        numAces: state.numAces,
-        topCard: state.topCard,
+        playerNumAces: state.playerNumAces,
+        dealerHand: state.dealerHand,
         dealerTotal: state.dealerTotal,
+        dealerNumAces: state.dealerNumAces,
         deck: state.deck
     }
 };
 
-import { playerHit, getTopCard, gameOver, playerLoses, playerWins, dealerHit, push } from '../store';
+//import { playerHit, getTopCard, gameOver, playerLoses, playerWins, dealerHit, push } from '../store';
+import { playerHit, getTopCard, gameOver, playerLoses, playerWins, dealersTurn, push } from '../store';
 
 const mapDispatchToProps = (dispatch)=> {
     return {
         playerHit: (obj)=> dispatch(playerHit(obj)),
-        dealerHit: (cards)=> dispatch(dealerHit(cards)),
-        getTopCard: ()=> dispatch(getTopCard()),
-        gameOver: ()=> dispatch(gameOver()),
+        dealersTurn: (obj)=> dispatch(dealersTurn(obj)),
         playerLoses: ()=> dispatch(playerLoses()),
         playerWins: ()=> dispatch(playerWins()),
         push: ()=> dispatch(push())
