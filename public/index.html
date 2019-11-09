@@ -1,8 +1,40 @@
 <html>
   <head>
+    <title>Blackjack - React</title>
+
     <script src='/dist/main.js' defer></script>
+    
+
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      body, html {
+      height: 100%;
+      margin: 0;
+      }
+
+      .bg {
+      /* The image used */
+      background-image: url("./suits.jpg");
+
+      /* Full height */
+      height: 100%; 
+
+      /* Center and scale the image nicely */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  </style>
+</head>
+<body>
+
   </head>
   <body>
-    <div id='root'></div>
+    <div class="bg">
+      <div id="root"></div>
+    </div>
   </body>
 </html>

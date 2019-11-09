@@ -1,0 +1,34 @@
+#main-container{
+    background-image: url('./felt.jpg');
+}
+
+.background{
+    background-image: url('./suits.jpg');
+}
+
+.submit_button{
+    background-color: green;
+    height: 50px;
+    width: 150px;
+    margin: 20px;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.bg {
+    /* The image used */
+    background-image: url("./suits.jpg");
+
+    /* Full height */
+    height: 100%; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

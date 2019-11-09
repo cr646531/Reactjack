@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Route, HashRouter as Router } from 'react-router-dom';
 
 import Bet from './Bet';
+import Nav from './Nav'
 
 
 class App extends Component{
@@ -14,15 +15,20 @@ class App extends Component{
   render(){
       return (
         <div>
-          <h1>Blackjack</h1>
-          <hr />
+          <Nav />
           <Router>
             <div>
               <Route path = '/play' component = { Bet } />
             </div>
           </Router>
+          <br />
+          <br />
+          <div className="container">
+            <footer className="footer">
+              <p>&copy; Company 2017</p>
+            </footer>
+          </div>
         </div>
-      
     );
   }
 };

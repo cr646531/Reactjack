@@ -97,9 +97,17 @@ class Bet extends Component{
 
     render(){
         return (
-            <div>
-                <h1>Bankroll: {this.props.bankroll}</h1>
-                <h1>Bet: {this.state.bet}</h1>
+            <div className="container bg-light">
+                <div className="container py-4">
+                    <div className="row align-items-center">
+                        <div className="col">
+                            <p className="h1 text-center">Bankroll: ${this.props.bankroll}</p>
+                        </div>
+                        <div className="col">
+                            <p className="h1 text-center">Bet: ${this.state.bet}</p>
+                        </div>
+                    </div>
+                </div>
                 <br />
                 {
                     this.state.displayBetSlider ? (
@@ -107,7 +115,7 @@ class Bet extends Component{
                             <form >
                                 <input type="range" min="1" max={this.props.bankroll} name="bet" default="1" onChange={this.toggleBet}/>
                             </form>
-                            <button onClick={this.checkBlackjack}>Deal</button>
+                            <button className="btn btn-secondary" onClick={this.checkBlackjack}>Deal</button>
                         </div>
                     ) : (
                         <div>
