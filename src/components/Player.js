@@ -35,6 +35,7 @@ class Player extends Component{
         if(playerTotal == 21){
             this.setState({ displayButtons: false });
             this.props.playerHit({ card: card, deck: deck, playerTotal: playerTotal, playerNumAces: playerNumAces });
+            this.dealersTurn()
             // dealer's turn
         } else if(playerTotal > 21){
             if(playerNumAces > 0){
@@ -115,13 +116,24 @@ class Player extends Component{
             <div>
     
                 <h1>Player's Hand ({this.props.playerTotal}): </h1>
-                <ul>
+                {/* <ul>
                     {
                         this.props.playerHand.map(card => (
                             <li key={card.id} >{card.rank} of {card.suit}</li>
                         ))
                     }
-                </ul>
+                </ul> */}
+
+                <div className="container py-4">
+                    <div className="row">
+                        {
+                            this.props.playerHand.map(card => (
+                                <img key={card.id} className="px-1" src={`cards/${card.rank}${card.suit}.png`} />
+                            ))
+                        }
+                    </div>
+                </div>
+
                 <br />
                 {
                     this.state.displayButtons && !this.props.displayBlackjack && (

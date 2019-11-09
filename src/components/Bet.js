@@ -13,10 +13,16 @@ class Bet extends Component{
             displayPlayerAndUser: false,
             displayBlackjack: false
         }
-        this.toggleBet = this.toggleBet.bind(this);
+        // this.toggleBet = this.toggleBet.bind(this);
         this.deal = this.deal.bind(this);
         this.takeBets = this.takeBets.bind(this);
         this.checkBlackjack = this.checkBlackjack.bind(this);
+        this.betOne = this.betOne.bind(this);
+        this.betFive = this.betFive.bind(this);
+        this.betTen = this.betTen.bind(this);
+        this.betTwenty = this.betTwenty.bind(this);
+        this.betFifty = this.betFifty.bind(this);
+        this.betHundred = this.betHundred.bind(this);
     }
 
     // passed to player component
@@ -29,12 +35,55 @@ class Bet extends Component{
         this.props.gameOver();
     }
 
-    toggleBet(event){
-        event.preventDefault();
-        this.setState({
-            [event.target.name]: event.target.value
-        });
-    }
+    // toggleBet(event){
+    //     event.preventDefault();
+    //     this.setState({
+    //         [event.target.name]: event.target.value
+    //     });
+    // }
+
+    betOne(){ 
+        if(this.state.bet + 1 > this.props.bankroll){
+            console.log('Insufficient Funds!')
+        } else {
+            this.setState({ bet: this.state.bet + 1 }) 
+        }
+    };
+    betFive(){ 
+        if(this.state.bet + 5 > this.props.bankroll){
+            console.log('Insufficient Funds!')
+        } else {
+            this.setState({ bet: this.state.bet + 5 }) 
+        }
+    };
+    betTen(){ 
+        if(this.state.bet + 10 > this.props.bankroll){
+            console.log('Insufficient Funds!')
+        } else {
+            this.setState({ bet: this.state.bet + 10 }) 
+        }
+    };
+    betTwenty(){ 
+        if(this.state.bet + 20 > this.props.bankroll){
+            console.log('Insufficient Funds!')
+        } else {
+            this.setState({ bet: this.state.bet + 20 }) 
+        }
+    };
+    betFifty(){ 
+        if(this.state.bet + 50 > this.props.bankroll){
+            console.log('Insufficient Funds!')
+        } else {
+            this.setState({ bet: this.state.bet + 50 }) 
+        } 
+    };
+    betHundred(){ 
+        if(this.state.bet + 100 > this.props.bet){
+            console.log('Insufficient Funds!')
+        } else {
+            this.setState({ bet: this.state.bet + 100 }) 
+        }
+    };
 
     checkBlackjack(){
         var deck = this.props.deck;
@@ -98,6 +147,7 @@ class Bet extends Component{
     render(){
         return (
             <div className="container bg-light">
+                <br />
                 <div className="container py-4">
                     <div className="row align-items-center">
                         <div className="col">
@@ -108,13 +158,38 @@ class Bet extends Component{
                         </div>
                     </div>
                 </div>
-                <br />
                 {
                     this.state.displayBetSlider ? (
-                        <div className="slidecontainer">
-                            <form >
-                                <input type="range" min="1" max={this.props.bankroll} name="bet" default="1" onChange={this.toggleBet}/>
-                            </form>
+                        // <div className="slidecontainer">
+                        //     <form >
+                        //         <input type="range" min="1" max={this.props.bankroll} name="bet" default="1" onChange={this.toggleBet}/>
+                        //     </form>
+                        //     <button className="btn btn-secondary" onClick={this.checkBlackjack}>Deal</button>
+                        // </div>
+                        <div>
+                            <div className="container py-4">
+                                <div className="row align-items-center">
+                                    <div className="col">
+                                        <img src={'one_chip.png'} onClick={this.betOne} />
+                                    </div>
+                                    <div className="col">
+                                        <img src={'five_chip.png'} onClick={this.betFive} />
+                                    </div>
+                                    <div className="col">
+                                        <img src={'ten_chip.png'} onClick={this.betTen} />
+                                    </div>
+                                    <div className="col">
+                                        <img src={'twenty_chip.png'} onClick={this.betTwenty} />
+                                    </div>
+                                    <div className="col">
+                                        <img src={'fifty_chip.png'} onClick={this.betFifty} />
+                                    </div>
+                                    <div className="col">
+                                        <img src={'hundred_chip.png'} onClick={this.betHundred} />
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
                             <button className="btn btn-secondary" onClick={this.checkBlackjack}>Deal</button>
                         </div>
                     ) : (

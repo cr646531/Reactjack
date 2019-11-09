@@ -16,7 +16,8 @@ const initialState = {
 
     dealerHand: [],
     dealerTotal: 0,
-    dealerNumAces: 0
+    dealerNumAces: 0,
+    displayFaceDownCard: true
 }
 
 const reducer = (state = initialState, action)=> {
@@ -52,7 +53,8 @@ const reducer = (state = initialState, action)=> {
                 dealerHand: [...state.dealerHand].concat(action.obj.cards),
                 dealerTotal: action.obj.dealerTotal,
                 dealerNumAces: action.obj.dealerNumAces,
-                deck: action.obj.deck
+                deck: action.obj.deck,
+                displayFaceDownCard: false
             });
         case 'GAME_OVER':
             return Object.assign({}, state, {

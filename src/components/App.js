@@ -25,9 +25,11 @@ class App extends Component{
           <br />
           <div className="container">
             <footer className="footer">
-              <p>&copy; Company 2017</p>
+              <p>&copy; 2DMerchant</p>
             </footer>
           </div>
+          <br />
+          <br />
         </div>
     );
   }
