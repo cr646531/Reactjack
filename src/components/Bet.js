@@ -78,7 +78,7 @@ class Bet extends Component{
         } 
     };
     betHundred(){ 
-        if(this.state.bet + 100 > this.props.bet){
+        if(this.state.bet + 100 > this.props.bankroll){
             console.log('Insufficient Funds!')
         } else {
             this.setState({ bet: this.state.bet + 100 }) 
@@ -132,6 +132,18 @@ class Bet extends Component{
         deck = deck.slice(3);
         var bet = this.state.bet * 1;
 
+        var displayDoubleDown = false;
+        if(bet * 2 <= this.props.bankroll){
+            displayDoubleDown = true;
+        }
+
+        var displaySplit = false;
+        if(displayDoubleDown == true){
+            if(playerHand[0].rank == playerHand[1].rank){
+                displaySplit = true;
+            }
+        }
+
         this.props.deal({
             playerHand: playerHand,
             playerTotal: playerTotal,
@@ -140,7 +152,9 @@ class Bet extends Component{
             dealerTotal: dealerTotal,
             dealerNumAces: dealerNumAces,
             deck: deck,
-            bet: bet
+            bet: bet,
+            displayDoubleDown: displayDoubleDown,
+            displaySplit: displaySplit
         });
     }
 

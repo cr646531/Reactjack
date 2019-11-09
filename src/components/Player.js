@@ -16,6 +16,7 @@ class Player extends Component{
         this.reset = this.reset.bind(this);
         this.dealersTurn = this.dealersTurn.bind(this);
         this.checkWinConditions = this.checkWinConditions.bind(this);
+        this.doubleDown = this.doubleDown.bind(this);
     }
 
     hit(){
@@ -50,6 +51,25 @@ class Player extends Component{
         } else {
             this.props.playerHit({ card: card, deck: deck, playerTotal: playerTotal, playerNumAces: playerNumAces })
         }
+    }
+
+    doubleDown(){
+        var playerTotal = this.props.playerTotal;
+        var playerNumAces = this.props.playerNumAces;
+        var deck = this.props.deck;
+
+        var card = deck[0];
+        if(card.rank == 'Ace'){ 
+            playerNumAces++ 
+        };
+
+        deck = deck.slice(1);
+
+        playerTotal += card.value;
+        this.setState({ displayButtons: false });
+        this.props.playerHit({ card: card, deck: deck, playerTotal: playerTotal, playerNumAces: playerNumAces });
+        this.props.doubleBet();
+        this.dealersTurn();
     }
 
     dealersTurn(){
@@ -140,7 +160,16 @@ class Player extends Component{
                         <div>
                             <button onClick={this.hit}>Hit Me</button>
                             <button onClick={this.dealersTurn}>Stay</button>
-                            <button>Double-down</button>
+                            {
+                                this.props.displayDoubleDown && (
+                                    <button onClick={this.doubleDown}>Double-down</button>
+                                )
+                            }
+                            {
+                                this.props.displaySplit && (
+                                    <button>Split</button>
+                                )
+                            }
                         </div>
                     )
                 }
@@ -204,12 +233,13 @@ const mapStateToProps = (state)=> {
         dealerHand: state.dealerHand,
         dealerTotal: state.dealerTotal,
         dealerNumAces: state.dealerNumAces,
-        deck: state.deck
+        deck: state.deck,
+        displayDoubleDown: state.displayDoubleDown
     }
 };
 
 //import { playerHit, getTopCard, gameOver, playerLoses, playerWins, dealerHit, push } from '../store';
-import { playerHit, getTopCard, gameOver, playerLoses, playerWins, dealersTurn, push } from '../store';
+import { playerHit, getTopCard, gameOver, playerLoses, playerWins, dealersTurn, push, doubleBet } from '../store';
 
 const mapDispatchToProps = (dispatch)=> {
     return {
@@ -217,7 +247,8 @@ const mapDispatchToProps = (dispatch)=> {
         dealersTurn: (obj)=> dispatch(dealersTurn(obj)),
         playerLoses: ()=> dispatch(playerLoses()),
         playerWins: ()=> dispatch(playerWins()),
-        push: ()=> dispatch(push())
+        push: ()=> dispatch(push()),
+        doubleBet: ()=> dispatch(doubleBet())
     };
 };
 

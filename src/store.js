@@ -14,10 +14,17 @@ const initialState = {
     playerTotal: 0,
     playerNumAces: 0,
 
+    player2Hand: [],
+    player2Total: 0,
+    player2NumAces: 0,
+
     dealerHand: [],
     dealerTotal: 0,
     dealerNumAces: 0,
-    displayFaceDownCard: true
+
+    displayFaceDownCard: true,
+    displayDoubleDown: false,
+    displaySplit: false
 }
 
 const reducer = (state = initialState, action)=> {
@@ -39,7 +46,9 @@ const reducer = (state = initialState, action)=> {
                 dealerTotal: action.obj.dealerTotal,
                 dealerNumAces: action.obj.dealerNumAces,
                 deck: action.obj.deck,
-                bet: action.obj.bet
+                bet: action.obj.bet,
+                displayDoubleDown: action.obj.displayDoubleDown,
+                displaySplit: action.obj.displaySplit
             });
         case 'PLAYER_HIT':
             return Object.assign({}, state, {
@@ -85,6 +94,10 @@ const reducer = (state = initialState, action)=> {
                 bankroll: state.bankroll + (Math.ceil(state.bet * 1.5)),
                 bet: 0
             });
+        case 'DOUBLE_BET':
+            return Object.assign({}, state, {
+                bet: state.bet * 2
+            })
         default:
             return state;
     };
@@ -152,6 +165,10 @@ const _blackjack = ()=> ({
     type: 'BLACKJACK'
 })
 
+const _doubleBet = ()=> ({
+    type: 'DOUBLE_BET'
+})
+
 // action dispatch
 
 
@@ -170,6 +187,14 @@ const loadRiggedDeck = ()=> {
             .then(deck => dispatch(_loadRiggedDeck(deck)))
     };
 };
+
+const loadRiggedSplit = ()=> {
+    return (dispatch)=> {
+        return axios.get('/data/rigSplit')
+            .then(res => res.data)
+            .then(deck => dispatch(_loadDeck(deck)))
+    }
+}
 
 const deal = (obj)=> {
     return (dispatch)=> {
@@ -233,7 +258,13 @@ const blackjack = ()=> {
     }
 }
 
+const doubleBet = ()=> {
+    return (dispatch)=> {
+        dispatch(_doubleBet());
+    }
+}
+
 // export actions
 
-export { loadDeck, loadRiggedDeck, playerHit, placeBet, deal, getTopCard, gameOver, playerLoses, playerWins, dealersTurn, push, blackjack };
+export { loadDeck, loadRiggedDeck, loadRiggedSplit, playerHit, placeBet, deal, getTopCard, gameOver, playerLoses, playerWins, dealersTurn, push, blackjack, doubleBet };
 

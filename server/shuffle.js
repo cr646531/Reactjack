@@ -22,7 +22,15 @@ const rig = (deck) => {
     return deck;
 }
 
+const rigSplit = (deck) => {
+    deck[0] = { rank: 'Ace', suit: 'Hearts', value: 11 };
+    deck[1] = { rank: 'Ace', suit: 'Diamonds', value: 11 };
+
+    return deck;
+}
+
 module.exports = {
     shuffle, 
-    rig
+    rig,
+    rigSplit
 }
