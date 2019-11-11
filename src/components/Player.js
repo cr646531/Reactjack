@@ -69,10 +69,11 @@ class Player extends Component{
         this.setState({ displayButtons: false });
         this.props.playerHit({ card: card, deck: deck, playerTotal: playerTotal, playerNumAces: playerNumAces });
         this.props.doubleBet();
-        this.dealersTurn();
+        this.dealersTurn(playerTotal);
+        console.log('doubleDown: ', playerTotal);
     }
 
-    dealersTurn(){
+    dealersTurn(playerTotal){
         var deck = this.props.deck;
 
         var dealerTotal = this.props.dealerTotal;
@@ -97,31 +98,35 @@ class Player extends Component{
         this.props.dealersTurn({ cards: cards, dealerTotal: dealerTotal, dealerNumAces: dealerNumAces, deck: deck })
 
         // call a new function to check win conditions
-        this.checkWinConditions(dealerTotal);
+        this.checkWinConditions(dealerTotal, playerTotal);
     }
 
-    checkWinConditions(dealerTotal){
-        var playerTotal = this.props.playerTotal;
-
+    checkWinConditions(dealerTotal, playerTotal){
         console.log('playerTotal: ', playerTotal);
         console.log('dealerTotal: ', dealerTotal);
 
-        if(dealerTotal > 21){
-            this.props.playerWins();
-            this.setState({ displayButtons: false, displayWin: true });
-            console.log('1')
-        } else if(dealerTotal > playerTotal){
+        if(playerTotal > 21){
             this.props.playerLoses();
-            this.setState({ displayButtons: false, displayLose: true });
-            console.log('2');
-        } else if(dealerTotal < playerTotal){
-            this.props.playerWins();
-            this.setState({ displayButtons: false, displayWin: true });
-            console.log('3')
+            this.setState({ displayButtons: false, displayBusted: true })
+            console.log('0');
         } else {
-            this.props.push();
-            this.setState({ displayButtons: false, displayPush: true });
-            console.log('4')
+            if(dealerTotal > 21){
+                this.props.playerWins();
+                this.setState({ displayButtons: false, displayWin: true });
+                console.log('1')
+            } else if(dealerTotal > playerTotal){
+                this.props.playerLoses();
+                this.setState({ displayButtons: false, displayLose: true });
+                console.log('2');
+            } else if(dealerTotal < playerTotal){
+                this.props.playerWins();
+                this.setState({ displayButtons: false, displayWin: true });
+                console.log('3')
+            } else {
+                this.props.push();
+                this.setState({ displayButtons: false, displayPush: true });
+                console.log('4')
+            }
         }
     }
 
@@ -136,19 +141,12 @@ class Player extends Component{
             <div>
     
                 <h1>Player's Hand ({this.props.playerTotal}): </h1>
-                {/* <ul>
-                    {
-                        this.props.playerHand.map(card => (
-                            <li key={card.id} >{card.rank} of {card.suit}</li>
-                        ))
-                    }
-                </ul> */}
 
                 <div className="container py-4">
                     <div className="row">
                         {
                             this.props.playerHand.map(card => (
-                                <img key={card.id} className="px-1" src={`cards/${card.rank}${card.suit}.png`} />
+                                <img key={`${card.rank}${card.suit}`} className="px-1" src={`cards/${card.rank}${card.suit}.png`} />
                             ))
                         }
                     </div>
@@ -166,8 +164,8 @@ class Player extends Component{
                                 )
                             }
                             {
-                                this.props.displaySplit && (
-                                    <button>Split</button>
+                                this.props.displaySplitButton && (
+                                    <button onClick={this.props.split}>Split</button>
                                 )
                             }
                         </div>
@@ -234,12 +232,13 @@ const mapStateToProps = (state)=> {
         dealerTotal: state.dealerTotal,
         dealerNumAces: state.dealerNumAces,
         deck: state.deck,
-        displayDoubleDown: state.displayDoubleDown
+        displayDoubleDown: state.displayDoubleDown,
+        displaySplitButton: state.displaySplitButton
     }
 };
 
 //import { playerHit, getTopCard, gameOver, playerLoses, playerWins, dealerHit, push } from '../store';
-import { playerHit, getTopCard, gameOver, playerLoses, playerWins, dealersTurn, push, doubleBet } from '../store';
+import { playerHit, getTopCard, gameOver, playerLoses, playerWins, dealersTurn, push, doubleBet, split } from '../store';
 
 const mapDispatchToProps = (dispatch)=> {
     return {
@@ -248,7 +247,8 @@ const mapDispatchToProps = (dispatch)=> {
         playerLoses: ()=> dispatch(playerLoses()),
         playerWins: ()=> dispatch(playerWins()),
         push: ()=> dispatch(push()),
-        doubleBet: ()=> dispatch(doubleBet())
+        doubleBet: ()=> dispatch(doubleBet()),
+        split: ()=> dispatch(split())
     };
 };
 

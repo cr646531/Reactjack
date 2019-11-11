@@ -14,17 +14,15 @@ const initialState = {
     playerTotal: 0,
     playerNumAces: 0,
 
-    player2Hand: [],
-    player2Total: 0,
-    player2NumAces: 0,
-
     dealerHand: [],
     dealerTotal: 0,
     dealerNumAces: 0,
 
     displayFaceDownCard: true,
     displayDoubleDown: false,
+    displaySplitButton: false,
     displaySplit: false
+
 }
 
 const reducer = (state = initialState, action)=> {
@@ -48,7 +46,7 @@ const reducer = (state = initialState, action)=> {
                 deck: action.obj.deck,
                 bet: action.obj.bet,
                 displayDoubleDown: action.obj.displayDoubleDown,
-                displaySplit: action.obj.displaySplit
+                displaySplitButton: action.obj.displaySplitButton
             });
         case 'PLAYER_HIT':
             return Object.assign({}, state, {
@@ -73,7 +71,10 @@ const reducer = (state = initialState, action)=> {
                 dealerHand: [],
                 dealerTotal: 0,
                 dealerNumAces: 0,
-                deck: action.deck
+                deck: action.deck,
+                displayFaceDownCard: true,
+                displaySplitButton: false,
+                displaySplit: false
             });
         case 'PLAYER_LOSES':
             return Object.assign({}, state, {
@@ -97,6 +98,15 @@ const reducer = (state = initialState, action)=> {
         case 'DOUBLE_BET':
             return Object.assign({}, state, {
                 bet: state.bet * 2
+            });
+        case 'SPLIT':
+            return Object.assign({}, state, {
+                displaySplit: true
+            });
+        case 'RESOLVE_SPLIT':
+            return Object.assign({}, state, {
+                bankroll: state.bankroll + action.winnings,
+                bet: 0
             })
         default:
             return state;
@@ -159,14 +169,23 @@ const _dealersTurn = (obj)=> ({
 
 const _push = ()=> ({
     type: 'PUSH'
-})
+});
 
 const _blackjack = ()=> ({
     type: 'BLACKJACK'
-})
+});
 
 const _doubleBet = ()=> ({
     type: 'DOUBLE_BET'
+});
+
+const _split = ()=> ({
+    type: 'SPLIT'
+});
+
+const _resolveSplit = (winnings)=> ({
+    type: 'RESOLVE_SPLIT',
+    winnings
 })
 
 // action dispatch
@@ -264,7 +283,19 @@ const doubleBet = ()=> {
     }
 }
 
+const split = ()=> {
+    return (dispatch)=> {
+        dispatch(_split());
+    }
+}
+
+const resolveSplit = (winnings)=> {
+    return (dispatch)=> {
+        dispatch(_resolveSplit(winnings));
+    }
+}
+
 // export actions
 
-export { loadDeck, loadRiggedDeck, loadRiggedSplit, playerHit, placeBet, deal, getTopCard, gameOver, playerLoses, playerWins, dealersTurn, push, blackjack, doubleBet };
+export { loadDeck, loadRiggedDeck, loadRiggedSplit, playerHit, placeBet, deal, getTopCard, gameOver, playerLoses, playerWins, dealersTurn, push, blackjack, doubleBet, split, resolveSplit };
 

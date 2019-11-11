@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import Player from './Player';
 import Dealer from './Dealer';
+import Split from './Split';
 
 class Bet extends Component{
     constructor(){
@@ -137,10 +138,10 @@ class Bet extends Component{
             displayDoubleDown = true;
         }
 
-        var displaySplit = false;
+        var displaySplitButton = false;
         if(displayDoubleDown == true){
             if(playerHand[0].rank == playerHand[1].rank){
-                displaySplit = true;
+                displaySplitButton = true;
             }
         }
 
@@ -154,7 +155,7 @@ class Bet extends Component{
             deck: deck,
             bet: bet,
             displayDoubleDown: displayDoubleDown,
-            displaySplit: displaySplit
+            displaySplitButton: displaySplitButton
         });
     }
 
@@ -213,7 +214,17 @@ class Bet extends Component{
                             <Dealer />
                             <br />
                             <hr />
-                            <Player takeBets={this.takeBets} displayBlackjack={this.state.displayBlackjack} />
+                            {
+                                this.props.displaySplit ? (
+                                    <div>
+                                        <Split takeBets={this.takeBets} />
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <Player takeBets={this.takeBets} displayBlackjack={this.state.displayBlackjack} />
+                                    </div>
+                                )
+                            }
                             {
                                 this.state.displayBlackjack && (
                                     <div>
@@ -239,7 +250,8 @@ const mapStateToProps = (state) => {
     return {
         bet: state.bet,
         bankroll: state.bankroll,
-        deck: state.deck
+        deck: state.deck,
+        displaySplit: state.displaySplit
     }
 }
 
