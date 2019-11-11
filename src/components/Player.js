@@ -42,6 +42,7 @@ class Player extends Component{
             if(playerNumAces > 0){
                 playerNumAces--;
                 playerTotal -= 10;
+                console.log('Ace');
                 this.props.playerHit({ card: card, deck: deck, playerTotal: playerTotal, playerNumAces: playerNumAces })
             } else {
                 this.setState({ displayButtons: false, displayBusted: true})
@@ -110,6 +111,7 @@ class Player extends Component{
             this.setState({ displayButtons: false, displayBusted: true })
             console.log('0');
         } else {
+            playerTotal = this.props.playerTotal;
             if(dealerTotal > 21){
                 this.props.playerWins();
                 this.setState({ displayButtons: false, displayWin: true });

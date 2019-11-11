@@ -52,7 +52,7 @@ const reducer = (state = initialState, action)=> {
             return Object.assign({}, state, {
                 playerHand: [...state.playerHand, action.obj.card],
                 playerTotal: action.obj.playerTotal,
-                numAces: action.obj.numAces,
+                playerNumAces: action.obj.playerNumAces,
                 deck: action.obj.deck
             });
         case 'DEALERS_TURN':
