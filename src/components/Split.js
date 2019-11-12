@@ -191,10 +191,6 @@ class Split extends Component{
         var winnings = 0;
         var { totalOne, totalTwo } = this.state;
 
-        console.log('dealer: ', dealerTotal);
-        console.log('one: ', totalOne);
-        console.log('two: ', totalTwo);
-
         if(totalOne <= 21){
             if(dealerTotal > 21){
                 this.setState({
@@ -257,8 +253,6 @@ class Split extends Component{
     }
 
     reset(){
-        console.log('reset');
-
         this.setState({
             displayOpening: true,
             displayButtonsOne: true,
@@ -289,7 +283,6 @@ class Split extends Component{
     }
 
     render(){
-        console.log(`\n\n\n\n\n-----\n\n\n\n\n`)
         return (
             <div>
                 {
@@ -459,18 +452,11 @@ const mapStateToProps = (state)=> {
     }
 };
 
-//import { playerHit, getTopCard, gameOver, playerLoses, playerWins, dealerHit, push } from '../store';
-import { playerHit, getTopCard, gameOver, playerLoses, playerWins, dealersTurn, push, doubleBet, split, resolveSplit } from '../store';
+import { dealersTurn, resolveSplit } from '../store';
 
 const mapDispatchToProps = (dispatch)=> {
     return {
-        playerHit: (obj)=> dispatch(playerHit(obj)),
         dealersTurn: (obj)=> dispatch(dealersTurn(obj)),
-        playerLoses: ()=> dispatch(playerLoses()),
-        playerWins: ()=> dispatch(playerWins()),
-        push: ()=> dispatch(push()),
-        doubleBet: ()=> dispatch(doubleBet()),
-        split: ()=> dispatch(split()),
         resolveSplit: (winnings)=> dispatch(resolveSplit(winnings))
     };
 };

@@ -145,10 +145,6 @@ const _placeBet = (bet)=> ({
     bet
 });
 
-const _getTopCard = ()=> ({
-    type: 'GET_TOP_CARD'
-})
-
 const _gameOver = (deck)=> ({
     type: 'GAME_OVER',
     deck
@@ -233,12 +229,6 @@ const placeBet = (bet)=> {
     };
 };
 
-const getTopCard = ()=> {
-    return (dispatch)=> {
-        dispatch(_getTopCard());
-    }
-}
-
 const gameOver = (deck)=> {
     return (dispatch)=> {
         return axios.get('/data/cards')
@@ -297,5 +287,5 @@ const resolveSplit = (winnings)=> {
 
 // export actions
 
-export { loadDeck, loadRiggedDeck, loadRiggedSplit, playerHit, placeBet, deal, getTopCard, gameOver, playerLoses, playerWins, dealersTurn, push, blackjack, doubleBet, split, resolveSplit };
+export { loadDeck, loadRiggedDeck, loadRiggedSplit, playerHit, placeBet, deal, gameOver, playerLoses, playerWins, dealersTurn, push, blackjack, doubleBet, split, resolveSplit };
 

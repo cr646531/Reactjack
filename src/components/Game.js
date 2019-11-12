@@ -27,7 +27,7 @@ export default class Game extends Component {
                     ) : (
                         <div className="container">
                             <br />
-                            <div className="container py-4">
+                            <div className="container py-10">
                                 <img src="game_over.gif" />
                             </div>
                         </div>

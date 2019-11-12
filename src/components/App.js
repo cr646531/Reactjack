@@ -21,14 +21,11 @@ class App extends Component{
             </div>
           </Router>
           <br />
-          <br />
           <div className="container">
             <footer className="footer">
               <p>&copy; 2DMerchant</p>
             </footer>
           </div>
-          <br />
-          <br />
         </div>
     );
   }

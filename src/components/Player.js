@@ -103,31 +103,23 @@ class Player extends Component{
     }
 
     checkWinConditions(dealerTotal, playerTotal){
-        console.log('playerTotal: ', playerTotal);
-        console.log('dealerTotal: ', dealerTotal);
-
         if(playerTotal > 21){
             this.props.playerLoses();
             this.setState({ displayButtons: false, displayBusted: true })
-            console.log('0');
         } else {
             playerTotal = this.props.playerTotal;
             if(dealerTotal > 21){
                 this.props.playerWins();
                 this.setState({ displayButtons: false, displayWin: true });
-                console.log('1')
             } else if(dealerTotal > playerTotal){
                 this.props.playerLoses();
                 this.setState({ displayButtons: false, displayLose: true });
-                console.log('2');
             } else if(dealerTotal < playerTotal){
                 this.props.playerWins();
                 this.setState({ displayButtons: false, displayWin: true });
-                console.log('3')
             } else {
                 this.props.push();
                 this.setState({ displayButtons: false, displayPush: true });
-                console.log('4')
             }
         }
     }
@@ -141,9 +133,7 @@ class Player extends Component{
     render(){
         return (
             <div>
-    
                 <h3>Player's Hand ({this.props.playerTotal}): </h3>
-
                 <div className="container py-2">
                     <div className="row">
                         {
@@ -153,7 +143,6 @@ class Player extends Component{
                         }
                     </div>
                 </div>
-
                 <br />
                 {
                     this.state.displayButtons && !this.props.displayBlackjack && (
@@ -221,8 +210,6 @@ class Player extends Component{
             </div>
         )
     }
-
-
 }
 
 const mapStateToProps = (state)=> {
@@ -240,7 +227,7 @@ const mapStateToProps = (state)=> {
 };
 
 //import { playerHit, getTopCard, gameOver, playerLoses, playerWins, dealerHit, push } from '../store';
-import { playerHit, getTopCard, gameOver, playerLoses, playerWins, dealersTurn, push, doubleBet, split } from '../store';
+import { playerHit, playerLoses, playerWins, dealersTurn, push, doubleBet, split } from '../store';
 
 const mapDispatchToProps = (dispatch)=> {
     return {

@@ -14,7 +14,6 @@ class Bet extends Component{
             displayPlayerAndUser: false,
             displayBlackjack: false
         }
-        // this.toggleBet = this.toggleBet.bind(this);
         this.deal = this.deal.bind(this);
         this.takeBets = this.takeBets.bind(this);
         this.checkBlackjack = this.checkBlackjack.bind(this);
@@ -38,13 +37,6 @@ class Bet extends Component{
         })
         this.props.gameOver();
     }
-
-    // toggleBet(event){
-    //     event.preventDefault();
-    //     this.setState({
-    //         [event.target.name]: event.target.value
-    //     });
-    // }
 
     betOne(){ 
         if(this.state.bet + 1 > this.props.bankroll){
