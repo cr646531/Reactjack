@@ -292,30 +292,38 @@ class Split extends Component{
         console.log(`\n\n\n\n\n-----\n\n\n\n\n`)
         return (
             <div>
-
                 {
                     this.state.displayOpening && (
-                        <div>
-                            <h1>Hand ({this.props.playerHand[0].value}):</h1>
-                            <div className="container py-4">
-                                <div className="row">
-                                    {
-                                        <img className="px-1" src={`cards/${this.props.playerHand[0].rank}${this.props.playerHand[0].suit}.png`} />
-                                    }
+                        <div className="container bg-light">
+                            <div className="container py-2">
+                                <div className="row align-items-center">
+                                    <div className="col">
+                                        <h3>Hand ({this.props.playerHand[0].value}):</h3>
+                                        <div className="container py-2">
+                                            <div className="row">
+                                                {
+                                                    <img className="px-1" src={`cards/${this.props.playerHand[0].rank}${this.props.playerHand[0].suit}.png`} />
+                                                }
+                                            </div>
+                                            <br />
+                                            <div className="row">
+                                                <button onClick={this.setup}>Hit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <h3>Hand ({this.props.playerHand[1].value}):</h3>
+                                        <div className="container py-2">
+                                            <div className="row">
+                                                {
+                                                    <img className="px-1" src={`cards/${this.props.playerHand[1].rank}${this.props.playerHand[1].suit}.png`} />
+                                                }
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
                                 </div>
                             </div>
-                            <br />
-                            <button onClick={this.setup}>Hit</button>
-                            <hr />
-                            <h1>Hand ({this.props.playerHand[1].value}):</h1>
-                            <div className="container py-4">
-                                <div className="row">
-                                    {
-                                        <img className="px-1" src={`cards/${this.props.playerHand[1].rank}${this.props.playerHand[1].suit}.png`} />
-                                    }
-                                </div>
-                            </div>
-                            <br />
                         </div>
                     )
                 }  
@@ -323,89 +331,103 @@ class Split extends Component{
                 {
                     !this.state.displayOpening && (
                         <div>
-                            <h1>Hand ({this.state.totalOne}):</h1>
-                            <div className="container py-4">
-                                <div className="row">
-                                    {
-                                        this.state.handOne.map(card => (
-                                            <img key={`${card.rank}${card.suit}`} className="px-1" src={`cards/${card.rank}${card.suit}.png`} />
-                                        ))
-                                    }
+                            <div className="container bg-light">
+                                <div className="container py-2">
+                                    <div className="row align-items-center">
+                                        <div className="col">
+                                            <h3>Hand ({this.state.totalOne}):</h3>
+                                            <div className="container py-2">
+                                                <div className="row">
+                                                    {
+                                                        this.state.handOne.map(card => (
+                                                            <img key={`${card.rank}${card.suit}`} className="px-1" src={`cards/${card.rank}${card.suit}.png`} />
+                                                        ))
+                                                    }
+                                                </div>
+                                                <br />
+                                                <div className="row">
+                                                    {
+                                                        this.state.displayButtonsOne && (
+                                                            <div>
+                                                                <button onClick={this.oneHit}>Hit</button>
+                                                                <button onClick={this.oneStay}>Stay</button>
+                                                            </div>
+                                                        )
+                                                    }
+                                                    {
+                                                        this.state.displayBustedOne && (
+                                                            <h3>Busted!</h3>
+                                                        )
+                                                    }
+                                                    {
+                                                        this.state.displayWinOne && (
+                                                            <h3>Player Wins!</h3>
+                                                        )
+                                                    }
+                                                    {
+                                                        this.state.displayLoseOne && (
+                                                            <h3>Player Loses!</h3>
+                                                        )
+                                                    }
+                                                    {
+                                                        this.state.displayPushOne && (
+                                                            <h3>Push</h3>
+                                                        )
+                                                    }
+                                                </div> 
+                                            </div>
+                                        </div>
+
+                                        <div className="col">
+                                            <h3>Hand ({this.state.totalTwo}):</h3>
+                                            <div className="container py-2">
+                                                <div className="row">
+                                                    {
+                                                        this.state.handTwo.map(card => (
+                                                            <img key={`${card.rank}${card.suit}`} className="px-1" src={`cards/${card.rank}${card.suit}.png`} />
+                                                        ))
+                                                    }
+                                                </div>
+                                                <br />
+                                                <div className="row">
+                                                    {
+                                                        this.state.displayButtonsTwo && (
+                                                            <div>
+                                                                <button onClick={this.twoHit}>Hit</button>
+                                                                {
+                                                                    this.state.displayStayTwo && (
+                                                                        <button onClick={this.twoStay}>Stay</button>
+                                                                    )
+                                                                }
+                                                            </div>
+                                                        )
+                                                    }
+                                                    {
+                                                        this.state.displayBustedTwo && (
+                                                            <h3>Busted!</h3>
+                                                        )
+                                                    }
+                                                    {
+                                                        this.state.displayWinTwo && (
+                                                            <h3>Player Wins!</h3>
+                                                        )
+                                                    }
+                                                    {
+                                                        this.state.displayLoseTwo && (
+                                                            <h3>Player Loses!</h3>
+                                                        )
+                                                    }
+                                                    {
+                                                        this.state.displayPushTwo && (
+                                                            <h3>Push</h3>
+                                                        )
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <br />
-                            {
-                                this.state.displayButtonsOne && (
-                                    <div>
-                                        <button onClick={this.oneHit}>Hit</button>
-                                        <button onClick={this.oneStay}>Stay</button>
-                                    </div>
-                                )
-                            }
-                            {
-                                this.state.displayBustedOne && (
-                                    <h1>Busted!</h1>
-                                )
-                            }
-                            {
-                                this.state.displayWinOne && (
-                                    <h1>Player Wins!</h1>
-                                )
-                            }
-                            {
-                                this.state.displayLoseOne && (
-                                    <h1>Player Loses!</h1>
-                                )
-                            }
-                            {
-                                this.state.displayPushOne && (
-                                    <h1>Push</h1>
-                                )
-                            }
-                            <hr />
-                            <h1>Hand ({this.state.totalTwo}):</h1>
-                            <div className="container py-4">
-                                <div className="row">
-                                    {
-                                        this.state.handTwo.map(card => (
-                                            <img key={`${card.rank}${card.suit}`} className="px-1" src={`cards/${card.rank}${card.suit}.png`} />
-                                        ))
-                                    }
-                                </div>
-                            </div>
-                            <br />
-                            {
-                                this.state.displayButtonsTwo && (
-                                    <div>
-                                        <button onClick={this.twoHit}>Hit</button>
-                                        {
-                                            this.state.displayStayTwo && (
-                                                <button onClick={this.twoStay}>Stay</button>
-                                            )
-                                        }
-                                    </div>
-                                )
-                            }
-                            {
-                                this.state.displayBustedTwo && (
-                                    <h1>Busted!</h1>
-                                )
-                            }
-                            {
-                                this.state.displayWinTwo && (
-                                    <h1>Player Wins!</h1>
-                                )
-                            }
-                            {
-                                this.state.displayLoseTwo && (
-                                    <h1>Player Loses!</h1>
-                                )
-                            }
-                            {
-                                this.state.displayPushTwo && (
-                                    <h1>Push</h1>
-                                )
-                            }
                         </div>
                     )
                 }  

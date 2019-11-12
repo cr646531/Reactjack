@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, HashRouter as Router } from 'react-router-dom';
 
-import Bet from './Bet';
 import Nav from './Nav'
-
+import Game from './Game';
 
 class App extends Component{
 
@@ -18,7 +17,7 @@ class App extends Component{
           <Nav />
           <Router>
             <div>
-              <Route path = '/play' component = { Bet } />
+              <Route path = '/play' component = { Game } />
             </div>
           </Router>
           <br />

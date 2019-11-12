@@ -142,9 +142,9 @@ class Player extends Component{
         return (
             <div>
     
-                <h1>Player's Hand ({this.props.playerTotal}): </h1>
+                <h3>Player's Hand ({this.props.playerTotal}): </h3>
 
-                <div className="container py-4">
+                <div className="container py-2">
                     <div className="row">
                         {
                             this.props.playerHand.map(card => (
@@ -176,7 +176,7 @@ class Player extends Component{
                 {
                     this.state.displayBusted && (
                         <div>
-                            <h1>BUSTED!</h1>
+                            <h3>BUSTED!</h3>
                             <br />
                             <button onClick={this.reset}>Play again?</button>
                         </div>
@@ -185,7 +185,7 @@ class Player extends Component{
                 {
                     this.state.displayWin && (
                         <div>
-                            <h1>Player Wins!</h1>
+                            <h3>Player Wins!</h3>
                             <br />
                             <button onClick={this.reset}>Play again?</button>
                         </div>
@@ -194,7 +194,7 @@ class Player extends Component{
                 {
                     this.state.displayLose && (
                         <div>
-                            <h1>Dealer Wins!</h1>
+                            <h3>Dealer Wins!</h3>
                             <br />
                             <button onClick={this.reset}>Play again?</button>
                         </div>
@@ -203,7 +203,7 @@ class Player extends Component{
                 {
                     this.state.displayPush && (
                         <div>
-                            <h1>Push</h1>
+                            <h3>Push</h3>
                             <br />
                             <button onClick={this.reset}>Play again?</button>
                         </div>
@@ -212,7 +212,7 @@ class Player extends Component{
                 {
                     this.props.blackjack && (
                         <div>
-                            <h1>Blackjack!</h1>
+                            <h3>Blackjack!</h3>
                             <br />
                             <button onClick={this.reset}>Play again?</button>
                         </div>

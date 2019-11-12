@@ -28,6 +28,9 @@ class Bet extends Component{
 
     // passed to player component
     takeBets(){
+        if(this.props.bankroll == 0){
+            this.props.endGame();
+        }
         this.setState({
             displayBetSlider: true,
             displayBlackjack: false,
@@ -163,44 +166,38 @@ class Bet extends Component{
         return (
             <div className="container bg-light">
                 <br />
-                <div className="container py-4">
+                <div className="container py-2">
                     <div className="row align-items-center">
                         <div className="col">
-                            <p className="h1 text-center">Bankroll: ${this.props.bankroll}</p>
+                            <p className="h2 text-center">Bankroll: ${this.props.bankroll}</p>
                         </div>
                         <div className="col">
-                            <p className="h1 text-center">Bet: ${this.state.bet}</p>
+                            <p className="h2 text-center">Bet: ${this.state.bet}</p>
                         </div>
                     </div>
                 </div>
                 {
                     this.state.displayBetSlider ? (
-                        // <div className="slidecontainer">
-                        //     <form >
-                        //         <input type="range" min="1" max={this.props.bankroll} name="bet" default="1" onChange={this.toggleBet}/>
-                        //     </form>
-                        //     <button className="btn btn-secondary" onClick={this.checkBlackjack}>Deal</button>
-                        // </div>
                         <div>
-                            <div className="container py-4">
+                            <div className="container py-2">
                                 <div className="row align-items-center">
                                     <div className="col">
-                                        <img src={'one_chip.png'} onClick={this.betOne} />
+                                        <img src={'chips/one_chip.png'} onClick={this.betOne} />
                                     </div>
                                     <div className="col">
-                                        <img src={'five_chip.png'} onClick={this.betFive} />
+                                        <img src={'chips/five_chip.png'} onClick={this.betFive} />
                                     </div>
                                     <div className="col">
-                                        <img src={'ten_chip.png'} onClick={this.betTen} />
+                                        <img src={'chips/ten_chip.png'} onClick={this.betTen} />
                                     </div>
                                     <div className="col">
-                                        <img src={'twenty_chip.png'} onClick={this.betTwenty} />
+                                        <img src={'chips/twenty_chip.png'} onClick={this.betTwenty} />
                                     </div>
                                     <div className="col">
-                                        <img src={'fifty_chip.png'} onClick={this.betFifty} />
+                                        <img src={'chips/fifty_chip.png'} onClick={this.betFifty} />
                                     </div>
                                     <div className="col">
-                                        <img src={'hundred_chip.png'} onClick={this.betHundred} />
+                                        <img src={'chips/hundred_chip.png'} onClick={this.betHundred} />
                                     </div>
                                 </div>
                             </div>
@@ -209,10 +206,8 @@ class Bet extends Component{
                         </div>
                     ) : (
                         <div>
-                            <br />
                             <hr />
                             <Dealer />
-                            <br />
                             <hr />
                             {
                                 this.props.displaySplit ? (
@@ -228,7 +223,7 @@ class Bet extends Component{
                             {
                                 this.state.displayBlackjack && (
                                     <div>
-                                        <h1>Blackjack!</h1>
+                                        <h3>Blackjack!</h3>
                                         <br />
                                         <button onClick={this.takeBets}>Play again?</button>
                                     </div>

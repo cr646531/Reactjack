@@ -6,7 +6,7 @@ class Dealer extends Component{
     render(){
         return (
             <div>
-                <h1>Dealer's Hand ({this.props.dealerTotal}): </h1>
+                <h3>Dealer's Hand ({this.props.dealerTotal}): </h3>
                 <div className="container py-4">
                     <div className="row">
                         {
