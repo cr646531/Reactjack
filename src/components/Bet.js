@@ -12,7 +12,9 @@ class Bet extends Component{
             bet: 0,
             displayBetSlider: true,
             displayPlayerAndUser: false,
-            displayBlackjack: false
+            displayBlackjack: false,
+            displayBetAlert: false,
+            displayFundsAlert: false
         }
         this.deal = this.deal.bind(this);
         this.takeBets = this.takeBets.bind(this);
@@ -41,44 +43,44 @@ class Bet extends Component{
 
     betOne(){ 
         if(this.state.bet + 1 > this.props.bankroll){
-            console.log('Insufficient Funds!')
+            this.setState({ displayFundsAlert: true })
         } else {
-            this.setState({ bet: this.state.bet + 1 }) 
+            this.setState({ displayBetAlert: false, displayFundsAlert: false, bet: this.state.bet + 1 }) 
         }
     };
     betFive(){ 
         if(this.state.bet + 5 > this.props.bankroll){
-            console.log('Insufficient Funds!')
+            this.setState({ displayFundsAlert: true })
         } else {
-            this.setState({ bet: this.state.bet + 5 }) 
+            this.setState({ displayBetAlert: false, displayFundsAlert: false, bet: this.state.bet + 5 }) 
         }
     };
     betTen(){ 
         if(this.state.bet + 10 > this.props.bankroll){
-            console.log('Insufficient Funds!')
+            this.setState({ displayFundsAlert: true })
         } else {
-            this.setState({ bet: this.state.bet + 10 }) 
+            this.setState({ displayBetAlert: false, displayFundsAlert: false, bet: this.state.bet + 10 }) 
         }
     };
     betTwenty(){ 
         if(this.state.bet + 20 > this.props.bankroll){
-            console.log('Insufficient Funds!')
+            this.setState({ displayFundsAlert: true })
         } else {
-            this.setState({ bet: this.state.bet + 20 }) 
+            this.setState({ displayBetAlert: false, displayFundsAlert: false, bet: this.state.bet + 20 }) 
         }
     };
     betFifty(){ 
         if(this.state.bet + 50 > this.props.bankroll){
-            console.log('Insufficient Funds!')
+            this.setState({ displayFundsAlert: true })
         } else {
-            this.setState({ bet: this.state.bet + 50 }) 
+            this.setState({ displayBetAlert: false, displayFundsAlert: false, bet: this.state.bet + 50 }) 
         } 
     };
     betHundred(){ 
         if(this.state.bet + 100 > this.props.bankroll){
-            console.log('Insufficient Funds!')
+            this.setState({ displayFundsAlert: true })
         } else {
-            this.setState({ bet: this.state.bet + 100 }) 
+            this.setState({ displayBetAlert: false, displayFundsAlert: false, bet: this.state.bet + 100 }) 
         }
     };
 
@@ -101,6 +103,13 @@ class Bet extends Component{
     }
 
     deal(){
+        if(this.state.bet == 0){
+            this.setState({ displayBetAlert: true });
+            return;
+        } else {
+            this.setState({ displayFundsAlert: false, displayBetAlers: false })
+        }
+
         this.setState({ displayBetSlider: false, displayPlayerAndDealer: true })
 
         var deck = this.props.deck;
@@ -200,7 +209,38 @@ class Bet extends Component{
                                         <img src={'chips/hundred_chip.png'} onClick={this.betHundred} />
                                     </div>
                                 </div>
-                                <br />
+                                {
+                                    this.state.displayBetAlert && (
+                                        <div className="row-align-center pt-4">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-md-10 col-md-offset-1">
+                                                        <div class="alert alert-warning" role="alert">
+                                                            <strong>You must bet at least $1</strong>
+                                                        </div>
+                                                    </div>
+
+                                                 </div>
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                                {
+                                    this.state.displayFundsAlert && (
+                                        <div className="row-align-center pt-4">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-md-10 col-md-offset-1">
+                                                        <div class="alert alert-warning" role="alert">
+                                                            <strong>Insufficient funds!</strong>
+                                                        </div>
+                                                    </div>
+
+                                                 </div>
+                                            </div>
+                                        </div>
+                                    )
+                                }
                                 <hr />
                                 <br />
                                 <div className="row align-items-center">

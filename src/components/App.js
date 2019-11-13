@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, HashRouter as Router } from 'react-router-dom';
 
+import $ from 'jquery';
+import Popper from 'popper.js';
+
 import Nav from './Nav'
 import Game from './Game';
 
