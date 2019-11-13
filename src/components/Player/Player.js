@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Buttons from './Buttons';
+
 import Bust from './alerts/Bust';
 import Win from './alerts/Win';
 import Lose from './alerts/Lose';
 import Push from './alerts/Push';
 import Blackjack from './alerts/Blackjack';
+
 
 
 class Player extends Component{
@@ -152,47 +155,28 @@ class Player extends Component{
                 <br />
                 {
                     this.state.displayButtons && !this.props.displayBlackjack && (
-                        <div>
-                            <button onClick={this.hit}>Hit Me</button>
-                            <button onClick={this.dealersTurn}>Stay</button>
-                            {
-                                this.props.displayDoubleDown && (
-                                    <button onClick={this.doubleDown}>Double-down</button>
-                                )
-                            }
-                            {
-                                this.props.displaySplitButton && (
-                                    <button onClick={this.props.split}>Split</button>
-                                )
-                            }
-                        </div>
+                        <Buttons hit={this.hit} dealersTurn={this.dealersTurn} doubleDown={this.doubleDown} split={this.props.split} />
+                        // <div>
+                        //     <button onClick={this.hit}>Hit Me</button>
+                        //     <button onClick={this.dealersTurn}>Stay</button>
+                        //     {
+                        //         this.props.displayDoubleDown && (
+                        //             <button onClick={this.doubleDown}>Double-down</button>
+                        //         )
+                        //     }
+                        //     {
+                        //         this.props.displaySplitButton && (
+                        //             <button onClick={this.props.split}>Split</button>
+                        //         )
+                        //     }
+                        // </div>
                     )
                 }
-                {
-                    this.state.displayBusted && (
-                        <Bust reset={this.reset} />
-                    )
-                }
-                {
-                    this.state.displayWin && (
-                        <Win reset={this.reset} />
-                    )
-                }
-                {
-                    this.state.displayLose && (
-                        <Lose reset={this.reset} />
-                    )
-                }
-                {
-                    this.state.displayPush && (
-                        <Push reset={this.reset} />
-                    )
-                }
-                {
-                    this.props.blackjack && (
-                        <Blackjack reset={this.reset} />
-                    )
-                }
+                { this.state.displayBusted && ( <Bust reset={this.reset} /> ) }
+                { this.state.displayWin && ( <Win reset={this.reset} /> ) }
+                { this.state.displayLose && ( <Lose reset={this.reset} /> ) }
+                { this.state.displayPush && ( <Push reset={this.reset} /> ) }
+                { this.props.blackjack && ( <Blackjack reset={this.reset} /> ) }
             </div>
         )
     }
