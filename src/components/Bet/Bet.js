@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Player from '../Player';
+import Player from '../Player/Player';
 import Dealer from '../Dealer';
 import Split from '../Split';
 

@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Bust from './alerts/Bust';
+import Win from './alerts/Win';
+import Lose from './alerts/Lose';
+import Push from './alerts/Push';
+import Blackjack from './alerts/Blackjack';
+
 
 class Player extends Component{
     constructor(props){
@@ -164,47 +170,27 @@ class Player extends Component{
                 }
                 {
                     this.state.displayBusted && (
-                        <div>
-                            <h3>BUSTED!</h3>
-                            <br />
-                            <button onClick={this.reset}>Play again?</button>
-                        </div>
+                        <Bust reset={this.reset} />
                     )
                 }
                 {
                     this.state.displayWin && (
-                        <div>
-                            <h3>Player Wins!</h3>
-                            <br />
-                            <button onClick={this.reset}>Play again?</button>
-                        </div>
+                        <Win reset={this.reset} />
                     )
                 }
                 {
                     this.state.displayLose && (
-                        <div>
-                            <h3>Dealer Wins!</h3>
-                            <br />
-                            <button onClick={this.reset}>Play again?</button>
-                        </div>
+                        <Lose reset={this.reset} />
                     )
                 }
                 {
                     this.state.displayPush && (
-                        <div>
-                            <h3>Push</h3>
-                            <br />
-                            <button onClick={this.reset}>Play again?</button>
-                        </div>
+                        <Push reset={this.reset} />
                     )
                 }
                 {
                     this.props.blackjack && (
-                        <div>
-                            <h3>Blackjack!</h3>
-                            <br />
-                            <button onClick={this.reset}>Play again?</button>
-                        </div>
+                        <Blackjack reset={this.reset} />
                     )
                 }
             </div>
@@ -227,7 +213,7 @@ const mapStateToProps = (state)=> {
 };
 
 //import { playerHit, getTopCard, gameOver, playerLoses, playerWins, dealerHit, push } from '../store';
-import { playerHit, playerLoses, playerWins, dealersTurn, push, doubleBet, split } from '../store';
+import { playerHit, playerLoses, playerWins, dealersTurn, push, doubleBet, split } from '../../store';
 
 const mapDispatchToProps = (dispatch)=> {
     return {
