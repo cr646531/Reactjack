@@ -15,7 +15,7 @@ class Bet extends Component{
         super();
         this.state = {
             bet: 0,
-            displayBetSlider: true,
+            displayChips: true,
             displayPlayerAndUser: false,
             displayBlackjack: false,
             displayBetAlert: false,
@@ -27,13 +27,13 @@ class Bet extends Component{
         this.resetBet = this.resetBet.bind(this);
     }
 
-    // passed to player component
+    // passed to "Player" component
     takeBets(){
         if(this.props.bankroll == 0){
             this.props.endGame();
         }
         this.setState({
-            displayBetSlider: true,
+            displayChips: true,
             displayBlackjack: false,
             bet: 0
         })
@@ -64,7 +64,7 @@ class Bet extends Component{
         }
 
         // hide chips and display 'Player' and 'Dealer' components
-        this.setState({ displayFundsAlert: false, displayBetAlerts: false, displayBetSlider: false, displayPlayerAndDealer: true })
+        this.setState({ displayFundsAlert: false, displayBetAlerts: false, displayChips: false, displayPlayerAndDealer: true })
 
         var deck = this.props.deck;
         var playerHand = [];
@@ -128,7 +128,7 @@ class Bet extends Component{
 
         // if the player was dealt a blackjack, display the 'blackjack' message and update the game state
         if(playerTotal == 21){
-            this.setState({ displayBetSlider: false, displayBlackjack: true })
+            this.setState({ displayChips: false, displayBlackjack: true })
             this.props.blackjack();
         }
     }
@@ -148,7 +148,7 @@ class Bet extends Component{
                     </div>
                 </div>
                 {
-                    this.state.displayBetSlider ? (
+                    this.state.displayChips ? (
                         <div>
                             <hr />
                             <div className="container py-2">
