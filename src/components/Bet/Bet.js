@@ -108,45 +108,47 @@ class Bet extends Component{
     }
 
     deal(){
+        // check to see if player placed minimum bet
         if(this.state.bet == 0){
             this.setState({ displayBetAlert: true });
             return;
-        } else {
-            this.setState({ displayFundsAlert: false, displayBetAlers: false })
         }
 
-        this.setState({ displayBetSlider: false, displayPlayerAndDealer: true })
+        // hide chips and display 'Player' and 'Dealer' components
+        this.setState({ displayFundsAlert: false, displayBetAlerts: false, displayBetSlider: false, displayPlayerAndDealer: true })
 
         var deck = this.props.deck;
-
         var playerHand = [];
         var playerTotal = 0;
         var playerNumAces = 0;
-
-        // special case - player is dealt two Aces
-        if(deck[0].rank == 'Ace' && deck[1].rank == 'Ace'){
-            playerTotal = 12;
-            playerNumAces = 1;
-        } else if(deck[0].rank == 'Ace' || deck[1].rank == 'Ace') {
-            playerTotal = deck[0].value + deck[1].value;
-            playerNumAces = 1;
-        } else {
-            playerTotal = deck[0].value + deck[1].value;
-            playerNumAces = 0;
-        }
-
         var dealerHand = [];
         var dealerTotal = 0;
         var dealerNumAces = 0;
 
-        if(deck[2].rank == 'Ace'){
-            dealerNumAces = 1;
-        }
-        dealerTotal = deck[2].value;
-
+        // deal the cards
         playerHand = deck.slice(0, 2);
         dealerHand = deck.slice(2, 3);
         deck = deck.slice(3);
+
+        // calculate player's total, and record how many aces were drawn
+        if(playerHand[0].rank == 'Ace' && playerHand[1].rank == 'Ace'){
+            playerTotal = 12;
+            playerNumAces = 1;
+        } else if(playerHand[0].rank == 'Ace' || playerHand[1].rank == 'Ace') {
+            playerTotal = playerHand[0].value + playerHand[1].value;
+            playerNumAces = 1;
+        } else {
+            playerTotal = playerHand[0].value + playerHand[1].value;
+            playerNumAces = 0;
+        }
+
+        // calculate dealer's total, and record how many aces were drawn
+        if(dealerHand[0].rank == 'Ace'){
+            dealerNumAces = 1;
+        }
+        dealerTotal = dealerHand[0].value;
+
+        
         var bet = this.state.bet * 1;
 
         var displayDoubleDown = false;
@@ -199,7 +201,7 @@ class Bet extends Component{
                                 { this.state.displayFundsAlert && ( <Funds /> ) }
                                 <hr />
                                 <br />
-                                <Buttons resetBet={this.resetBet} checkBlackJack={this.checkBlackjack} />
+                                <Buttons resetBet={this.resetBet} checkBlackjack={this.checkBlackjack} />
                             </div>
                         </div>
                     ) : (
