@@ -23,12 +23,7 @@ class Bet extends Component{
         }
         this.deal = this.deal.bind(this);
         this.takeBets = this.takeBets.bind(this);
-        this.betOne = this.betOne.bind(this);
-        this.betFive = this.betFive.bind(this);
-        this.betTen = this.betTen.bind(this);
-        this.betTwenty = this.betTwenty.bind(this);
-        this.betFifty = this.betFifty.bind(this);
-        this.betHundred = this.betHundred.bind(this);
+        this.bet = this.bet.bind(this);
         this.resetBet = this.resetBet.bind(this);
     }
 
@@ -45,48 +40,13 @@ class Bet extends Component{
         this.props.gameOver();
     }
 
-    betOne(){ 
-        if(this.state.bet + 1 > this.props.bankroll){
+    bet(amount){
+        if(this.state.bet + amount > this.props.bankroll){
             this.setState({ displayFundsAlert: true })
         } else {
-            this.setState({ displayBetAlert: false, displayFundsAlert: false, bet: this.state.bet + 1 }) 
+            this.setState({ displayBetAlert: false, displayFundsAlert: false, bet: this.state.bet + amount }) 
         }
-    };
-    betFive(){ 
-        if(this.state.bet + 5 > this.props.bankroll){
-            this.setState({ displayFundsAlert: true })
-        } else {
-            this.setState({ displayBetAlert: false, displayFundsAlert: false, bet: this.state.bet + 5 }) 
-        }
-    };
-    betTen(){ 
-        if(this.state.bet + 10 > this.props.bankroll){
-            this.setState({ displayFundsAlert: true })
-        } else {
-            this.setState({ displayBetAlert: false, displayFundsAlert: false, bet: this.state.bet + 10 }) 
-        }
-    };
-    betTwenty(){ 
-        if(this.state.bet + 20 > this.props.bankroll){
-            this.setState({ displayFundsAlert: true })
-        } else {
-            this.setState({ displayBetAlert: false, displayFundsAlert: false, bet: this.state.bet + 20 }) 
-        }
-    };
-    betFifty(){ 
-        if(this.state.bet + 50 > this.props.bankroll){
-            this.setState({ displayFundsAlert: true })
-        } else {
-            this.setState({ displayBetAlert: false, displayFundsAlert: false, bet: this.state.bet + 50 }) 
-        } 
-    };
-    betHundred(){ 
-        if(this.state.bet + 100 > this.props.bankroll){
-            this.setState({ displayFundsAlert: true })
-        } else {
-            this.setState({ displayBetAlert: false, displayFundsAlert: false, bet: this.state.bet + 100 }) 
-        }
-    };
+    }
 
     resetBet(){
         this.setState({
@@ -192,7 +152,7 @@ class Bet extends Component{
                         <div>
                             <hr />
                             <div className="container py-2">
-                                <Chips betOne={this.betOne} betFive={this.betFive} betTen={this.betTen} betTwenty={this.betTwenty} betFifty={this.betFifty} betHundred={this.betHundred} />
+                                <Chips bet={this.bet} />
                                 { this.state.displayBetAlert && ( <Minimum /> ) }
                                 { this.state.displayFundsAlert && ( <Funds /> ) }
                                 <hr />
