@@ -23,6 +23,7 @@ class Bet extends Component{
         this.betTwenty = this.betTwenty.bind(this);
         this.betFifty = this.betFifty.bind(this);
         this.betHundred = this.betHundred.bind(this);
+        this.resetBet = this.resetBet.bind(this);
     }
 
     // passed to player component
@@ -79,6 +80,12 @@ class Bet extends Component{
         } else {
             this.setState({ bet: this.state.bet + 100 }) 
         }
+    };
+
+    resetBet(){
+        this.setState({
+            bet: 0
+        });
     };
 
     checkBlackjack(){
@@ -161,16 +168,17 @@ class Bet extends Component{
                 <div className="container py-2">
                     <div className="row align-items-center">
                         <div className="col">
-                            <p className="h2 text-center">Bankroll: ${this.props.bankroll}</p>
+                            <p className="h2 text-center">Bankroll: <span class="badge badge-pill badge-success">${this.props.bankroll - this.state.bet}</span></p>
                         </div>
                         <div className="col">
-                            <p className="h2 text-center">Bet: ${this.state.bet}</p>
+                            <p className="h2 text-center">Bet: <span class="badge badge-pill badge-warning">${this.state.bet}</span></p>
                         </div>
                     </div>
                 </div>
                 {
                     this.state.displayBetSlider ? (
                         <div>
+                            <hr />
                             <div className="container py-2">
                                 <div className="row align-items-center">
                                     <div className="col">
@@ -192,9 +200,24 @@ class Bet extends Component{
                                         <img src={'chips/hundred_chip.png'} onClick={this.betHundred} />
                                     </div>
                                 </div>
+                                <br />
+                                <hr />
+                                <br />
+                                <div className="row align-items-center">
+                                    <div className="col">
+                                    </div>
+                                    <div className="col">
+                                        <button type="button" className="btn btn-danger btn-lg btn-block" onClick={this.resetBet}>Reset</button>
+                                    </div>
+                                    <div className="col">
+                                    </div>
+                                    <div className="col">
+                                        <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.checkBlackjack}>Deal</button>
+                                    </div>
+                                    <div className="col">
+                                    </div>
+                                </div>
                             </div>
-                            <br />
-                            <button className="btn btn-secondary" onClick={this.checkBlackjack}>Deal</button>
                         </div>
                     ) : (
                         <div>

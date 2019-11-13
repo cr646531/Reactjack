@@ -133,7 +133,7 @@ class Player extends Component{
     render(){
         return (
             <div>
-                <h3>Player's Hand ({this.props.playerTotal}): </h3>
+                <h3>Player's Hand <span className="badge badge-pill badge-dark">{this.props.playerTotal}</span></h3>
                 <div className="container py-2">
                     <div className="row">
                         {

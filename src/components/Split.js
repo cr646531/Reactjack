@@ -291,7 +291,7 @@ class Split extends Component{
                             <div className="container py-2">
                                 <div className="row align-items-center">
                                     <div className="col">
-                                        <h3>Hand ({this.props.playerHand[0].value}):</h3>
+                                        <h3>Hand <span className="badge badge-pill badge-dark">{this.props.playerHand[0].value}</span></h3>
                                         <div className="container py-2">
                                             <div className="row">
                                                 {
@@ -305,7 +305,7 @@ class Split extends Component{
                                         </div>
                                     </div>
                                     <div className="col">
-                                        <h3>Hand ({this.props.playerHand[1].value}):</h3>
+                                        <h3>Hand <span className="badge badge-pill badge-dark">{this.props.playerHand[1].value}</span></h3>
                                         <div className="container py-2">
                                             <div className="row">
                                                 {
@@ -328,7 +328,7 @@ class Split extends Component{
                                 <div className="container py-2">
                                     <div className="row align-items-center">
                                         <div className="col">
-                                            <h3>Hand ({this.state.totalOne}):</h3>
+                                            <h3>Hand <span className="badge badge-pill badge-dark">{this.state.totalOne}</span></h3>
                                             <div className="container py-2">
                                                 <div className="row">
                                                     {
@@ -372,7 +372,7 @@ class Split extends Component{
                                         </div>
 
                                         <div className="col">
-                                            <h3>Hand ({this.state.totalTwo}):</h3>
+                                            <h3>Hand <span className="badge badge-pill badge-dark">{this.state.totalTwo}</span></h3>
                                             <div className="container py-2">
                                                 <div className="row">
                                                     {
