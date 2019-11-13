@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import Player from '../Player';
 import Dealer from '../Dealer';
 import Split from '../Split';
-import Chips from '../Chips';
 
+import Chips from './Chips';
+import Buttons from './Buttons';
 import Minimum from './alerts/Minimum';
 import Funds from './alerts/Funds';
-import Buttons from './Buttons';
 
 class Bet extends Component{
     constructor(){
