@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Player from '../Player/Player';
-import Dealer from '../Dealer';
+import Player from '../Table/Player';
+import Dealer from '../Table/Dealer';
 
 import Chips from './Chips';
 import Buttons from './Buttons';
@@ -139,10 +139,10 @@ class Bet extends Component{
                 <div className="container py-2">
                     <div className="row align-items-center">
                         <div className="col">
-                            <p className="h2 text-center">Bankroll: <span class="badge badge-pill badge-success">${this.props.bankroll - this.state.bet}</span></p>
+                            <p className="h2 text-center">Bankroll: <span className="badge badge-pill badge-success">${this.props.bankroll - this.state.bet}</span></p>
                         </div>
                         <div className="col">
-                            <p className="h2 text-center">Bet: <span class="badge badge-pill badge-warning">${this.state.bet}</span></p>
+                            <p className="h2 text-center">Bet: <span className="badge badge-pill badge-warning">${this.state.bet}</span></p>
                         </div>
                     </div>
                 </div>
