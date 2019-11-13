@@ -25,7 +25,6 @@ class Player extends Component{
         this.reset = this.reset.bind(this);
         this.dealersTurn = this.dealersTurn.bind(this);
         this.checkWinConditions = this.checkWinConditions.bind(this);
-        this.doubleDown = this.doubleDown.bind(this);
     }
 
     hit(){
@@ -63,27 +62,9 @@ class Player extends Component{
         }
     }
 
-    doubleDown(){
-        var playerTotal = this.props.playerTotal;
-        var playerNumAces = this.props.playerNumAces;
-        var deck = this.props.deck;
-
-        var card = deck[0];
-        if(card.rank == 'Ace'){ 
-            playerNumAces++ 
-        };
-
-        deck = deck.slice(1);
-
-        playerTotal += card.value;
-        this.setState({ displayButtons: false });
-        this.props.playerHit({ card: card, deck: deck, playerTotal: playerTotal, playerNumAces: playerNumAces });
-        this.props.doubleBet();
-        this.dealersTurn(playerTotal);
-        console.log('doubleDown: ', playerTotal);
-    }
-
     dealersTurn(playerTotal){
+
+        this.setState({ displayButtons: false });
         var deck = this.props.deck;
 
         var dealerTotal = this.props.dealerTotal;
@@ -155,21 +136,7 @@ class Player extends Component{
                 <br />
                 {
                     this.state.displayButtons && !this.props.displayBlackjack && (
-                        <Buttons hit={this.hit} dealersTurn={this.dealersTurn} doubleDown={this.doubleDown} split={this.props.split} />
-                        // <div>
-                        //     <button onClick={this.hit}>Hit Me</button>
-                        //     <button onClick={this.dealersTurn}>Stay</button>
-                        //     {
-                        //         this.props.displayDoubleDown && (
-                        //             <button onClick={this.doubleDown}>Double-down</button>
-                        //         )
-                        //     }
-                        //     {
-                        //         this.props.displaySplitButton && (
-                        //             <button onClick={this.props.split}>Split</button>
-                        //         )
-                        //     }
-                        // </div>
+                        <Buttons hit={this.hit} dealersTurn={this.dealersTurn} split={this.props.split} />
                     )
                 }
                 { this.state.displayBusted && ( <Bust reset={this.reset} /> ) }
@@ -190,14 +157,11 @@ const mapStateToProps = (state)=> {
         dealerHand: state.dealerHand,
         dealerTotal: state.dealerTotal,
         dealerNumAces: state.dealerNumAces,
-        deck: state.deck,
-        displayDoubleDown: state.displayDoubleDown,
-        displaySplitButton: state.displaySplitButton
+        deck: state.deck
     }
 };
 
-//import { playerHit, getTopCard, gameOver, playerLoses, playerWins, dealerHit, push } from '../store';
-import { playerHit, playerLoses, playerWins, dealersTurn, push, doubleBet, split } from '../../store';
+import { playerHit, playerLoses, playerWins, dealersTurn, push, split } from '../../store';
 
 const mapDispatchToProps = (dispatch)=> {
     return {
@@ -206,7 +170,6 @@ const mapDispatchToProps = (dispatch)=> {
         playerLoses: ()=> dispatch(playerLoses()),
         playerWins: ()=> dispatch(playerWins()),
         push: ()=> dispatch(push()),
-        doubleBet: ()=> dispatch(doubleBet()),
         split: ()=> dispatch(split())
     };
 };
