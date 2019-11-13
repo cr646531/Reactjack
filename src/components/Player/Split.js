@@ -452,7 +452,7 @@ const mapStateToProps = (state)=> {
     }
 };
 
-import { dealersTurn, resolveSplit } from '../store';
+import { dealersTurn, resolveSplit } from '../../store';
 
 const mapDispatchToProps = (dispatch)=> {
     return {

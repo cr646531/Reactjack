@@ -20,8 +20,8 @@ const initialState = {
 
     displayFaceDownCard: true,
     displayDoubleDown: false,
-    displaySplitButton: false,
-    displaySplit: false
+    displaySplitButton: false
+    // displaySplit: false
 
 }
 
@@ -99,10 +99,10 @@ const reducer = (state = initialState, action)=> {
             return Object.assign({}, state, {
                 bet: state.bet * 2
             });
-        case 'SPLIT':
-            return Object.assign({}, state, {
-                displaySplit: true
-            });
+        // case 'SPLIT':
+        //     return Object.assign({}, state, {
+        //         displaySplit: true
+        //     });
         case 'RESOLVE_SPLIT':
             return Object.assign({}, state, {
                 bankroll: state.bankroll + action.winnings,
@@ -175,9 +175,9 @@ const _doubleBet = ()=> ({
     type: 'DOUBLE_BET'
 });
 
-const _split = ()=> ({
-    type: 'SPLIT'
-});
+// const _split = ()=> ({
+//     type: 'SPLIT'
+// });
 
 const _resolveSplit = (winnings)=> ({
     type: 'RESOLVE_SPLIT',
@@ -273,11 +273,11 @@ const doubleBet = ()=> {
     }
 }
 
-const split = ()=> {
-    return (dispatch)=> {
-        dispatch(_split());
-    }
-}
+// const split = ()=> {
+//     return (dispatch)=> {
+//         dispatch(_split());
+//     }
+// }
 
 const resolveSplit = (winnings)=> {
     return (dispatch)=> {
@@ -287,5 +287,5 @@ const resolveSplit = (winnings)=> {
 
 // export actions
 
-export { loadDeck, loadRiggedDeck, loadRiggedSplit, playerHit, placeBet, deal, gameOver, playerLoses, playerWins, dealersTurn, push, blackjack, doubleBet, split, resolveSplit };
+export { loadDeck, loadRiggedDeck, loadRiggedSplit, playerHit, placeBet, deal, gameOver, playerLoses, playerWins, dealersTurn, push, blackjack, doubleBet, resolveSplit };
 

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import Player from '../Player/Player';
 import Dealer from '../Dealer';
-import Split from '../Split';
 
 import Chips from './Chips';
 import Buttons from './Buttons';
@@ -166,15 +165,7 @@ class Bet extends Component{
                             <Dealer />
                             <hr />
                             {
-                                this.props.displaySplit ? (
-                                    <div>
-                                        <Split takeBets={this.takeBets} />
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <Player takeBets={this.takeBets} displayBlackjack={this.state.displayBlackjack} />
-                                    </div>
-                                )
+                                <Player takeBets={this.takeBets} />
                             }
                             {
                                 this.state.displayBlackjack && (
@@ -201,8 +192,7 @@ const mapStateToProps = (state) => {
     return {
         bet: state.bet,
         bankroll: state.bankroll,
-        deck: state.deck,
-        displaySplit: state.displaySplit
+        deck: state.deck
     }
 }
 

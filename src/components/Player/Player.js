@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Buttons from './Buttons';
+import Split from './Split';
+
 
 import Bust from './alerts/Bust';
 import Win from './alerts/Win';
@@ -19,12 +21,14 @@ class Player extends Component{
             displayBusted: false,
             displayWin: false,
             displayLose: false,
-            displayPush: false
+            displayPush: false,
+            displaySplit: false
         }
         this.hit = this.hit.bind(this);
         this.reset = this.reset.bind(this);
         this.dealersTurn = this.dealersTurn.bind(this);
         this.checkWinConditions = this.checkWinConditions.bind(this);
+        this.split = this.split.bind(this);
     }
 
     hit(){
@@ -120,30 +124,42 @@ class Player extends Component{
         this.props.takeBets();
     }
 
+    split(){
+        this.setState({ displaySplit: true });
+    }
+
     render(){
         return (
             <div>
-                <h3>Player's Hand <span className="badge badge-pill badge-dark">{this.props.playerTotal}</span></h3>
-                <div className="container py-2">
-                    <div className="row">
-                        {
-                            this.props.playerHand.map(card => (
-                                <img key={`${card.rank}${card.suit}`} className="px-1" src={`cards/${card.rank}${card.suit}.png`} />
-                            ))
-                        }
-                    </div>
-                </div>
-                <br />
                 {
-                    this.state.displayButtons && !this.props.displayBlackjack && (
-                        <Buttons hit={this.hit} dealersTurn={this.dealersTurn} split={this.props.split} />
+                    !this.state.displaySplit ? (
+                        <div>
+                            <h3>Player's Hand <span className="badge badge-pill badge-dark">{this.props.playerTotal}</span></h3>
+                            <div className="container py-2">
+                                <div className="row">
+                                    {
+                                        this.props.playerHand.map(card => (
+                                            <img key={`${card.rank}${card.suit}`} className="px-1" src={`cards/${card.rank}${card.suit}.png`} />
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                            <br />
+                            {
+                                this.state.displayButtons && !this.props.displayBlackjack && (
+                                    <Buttons hit={this.hit} dealersTurn={this.dealersTurn} split={this.split} />
+                                )
+                            }
+                            { this.state.displayBusted && ( <Bust reset={this.reset} /> ) }
+                            { this.state.displayWin && ( <Win reset={this.reset} /> ) }
+                            { this.state.displayLose && ( <Lose reset={this.reset} /> ) }
+                            { this.state.displayPush && ( <Push reset={this.reset} /> ) }
+                            { this.props.blackjack && ( <Blackjack reset={this.reset} /> ) }
+                        </div>
+                    ) : (
+                        <Split takeBets={this.props.takeBets} />
                     )
                 }
-                { this.state.displayBusted && ( <Bust reset={this.reset} /> ) }
-                { this.state.displayWin && ( <Win reset={this.reset} /> ) }
-                { this.state.displayLose && ( <Lose reset={this.reset} /> ) }
-                { this.state.displayPush && ( <Push reset={this.reset} /> ) }
-                { this.props.blackjack && ( <Blackjack reset={this.reset} /> ) }
             </div>
         )
     }
@@ -161,7 +177,7 @@ const mapStateToProps = (state)=> {
     }
 };
 
-import { playerHit, playerLoses, playerWins, dealersTurn, push, split } from '../../store';
+import { playerHit, playerLoses, playerWins, dealersTurn, push } from '../../store';
 
 const mapDispatchToProps = (dispatch)=> {
     return {
@@ -169,8 +185,7 @@ const mapDispatchToProps = (dispatch)=> {
         dealersTurn: (obj)=> dispatch(dealersTurn(obj)),
         playerLoses: ()=> dispatch(playerLoses()),
         playerWins: ()=> dispatch(playerWins()),
-        push: ()=> dispatch(push()),
-        split: ()=> dispatch(split())
+        push: ()=> dispatch(push())
     };
 };
 
