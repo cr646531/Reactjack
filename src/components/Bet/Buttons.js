@@ -13,7 +13,7 @@ export default class Buttons extends Component {
                 <div className="col">
                 </div>
                 <div className="col">
-                    <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.props.checkBlackjack}>Deal</button>
+                    <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.props.deal}>Deal</button>
                 </div>
                 <div className="col">
                 </div>

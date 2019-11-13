@@ -23,7 +23,6 @@ class Bet extends Component{
         }
         this.deal = this.deal.bind(this);
         this.takeBets = this.takeBets.bind(this);
-        this.checkBlackjack = this.checkBlackjack.bind(this);
         this.betOne = this.betOne.bind(this);
         this.betFive = this.betFive.bind(this);
         this.betTen = this.betTen.bind(this);
@@ -95,23 +94,13 @@ class Bet extends Component{
         });
     };
 
-    checkBlackjack(){
-        var deck = this.props.deck;
-
-        if(deck[0].value + deck[1].value == 21){
-            this.setState({ displayBetSlider: false, displayBlackjack: true })
-            this.deal();
-            this.props.blackjack();
-        } else {
-            this.deal();
-        }
-    }
-
     deal(){
         // check to see if player placed minimum bet
         if(this.state.bet == 0){
             this.setState({ displayBetAlert: true });
             return;
+        } else {
+            var bet = this.state.bet * 1;
         }
 
         // hide chips and display 'Player' and 'Dealer' components
@@ -148,14 +137,14 @@ class Bet extends Component{
         }
         dealerTotal = dealerHand[0].value;
 
-        
-        var bet = this.state.bet * 1;
 
+        // if the player can afford to double-down, display the 'double-down' button
         var displayDoubleDown = false;
         if(bet * 2 <= this.props.bankroll){
             displayDoubleDown = true;
         }
 
+        // if the player was dealt two-of-a-kind, display the 'split' button
         var displaySplitButton = false;
         if(displayDoubleDown == true){
             if(playerHand[0].rank == playerHand[1].rank){
@@ -163,6 +152,7 @@ class Bet extends Component{
             }
         }
 
+        // update the game state
         this.props.deal({
             playerHand: playerHand,
             playerTotal: playerTotal,
@@ -175,6 +165,12 @@ class Bet extends Component{
             displayDoubleDown: displayDoubleDown,
             displaySplitButton: displaySplitButton
         });
+
+        // if the player was dealt a blackjack, display the 'blackjack' message and update the game state
+        if(playerTotal == 21){
+            this.setState({ displayBetSlider: false, displayBlackjack: true })
+            this.props.blackjack();
+        }
     }
 
     render(){
@@ -201,7 +197,7 @@ class Bet extends Component{
                                 { this.state.displayFundsAlert && ( <Funds /> ) }
                                 <hr />
                                 <br />
-                                <Buttons resetBet={this.resetBet} checkBlackjack={this.checkBlackjack} />
+                                <Buttons resetBet={this.resetBet} deal={this.deal} />
                             </div>
                         </div>
                     ) : (
