@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Player from './Player';
 import Dealer from './Dealer';
 import Split from './Split';
+import Chips from './Chips';
 
 class Bet extends Component{
     constructor(){
@@ -189,26 +190,7 @@ class Bet extends Component{
                         <div>
                             <hr />
                             <div className="container py-2">
-                                <div className="row align-items-center">
-                                    <div className="col">
-                                        <img src={'chips/one_chip.png'} onClick={this.betOne} />
-                                    </div>
-                                    <div className="col">
-                                        <img src={'chips/five_chip.png'} onClick={this.betFive} />
-                                    </div>
-                                    <div className="col">
-                                        <img src={'chips/ten_chip.png'} onClick={this.betTen} />
-                                    </div>
-                                    <div className="col">
-                                        <img src={'chips/twenty_chip.png'} onClick={this.betTwenty} />
-                                    </div>
-                                    <div className="col">
-                                        <img src={'chips/fifty_chip.png'} onClick={this.betFifty} />
-                                    </div>
-                                    <div className="col">
-                                        <img src={'chips/hundred_chip.png'} onClick={this.betHundred} />
-                                    </div>
-                                </div>
+                                <Chips betOne={this.betOne} betFive={this.betFive} betTen={this.betTen} betTwenty={this.betTwenty} betFifty={this.betFifty} betHundred={this.betHundred} />
                                 {
                                     this.state.displayBetAlert && (
                                         <div className="row-align-center pt-4">
