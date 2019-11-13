@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Player from './Player';
-import Dealer from './Dealer';
-import Split from './Split';
-import Chips from './Chips';
+import Player from '../Player';
+import Dealer from '../Dealer';
+import Split from '../Split';
+import Chips from '../Chips';
+
+import Minimum from './alerts/Minimum';
+import Funds from './alerts/Funds';
+import Buttons from './Buttons';
 
 class Bet extends Component{
     constructor(){
@@ -191,54 +195,11 @@ class Bet extends Component{
                             <hr />
                             <div className="container py-2">
                                 <Chips betOne={this.betOne} betFive={this.betFive} betTen={this.betTen} betTwenty={this.betTwenty} betFifty={this.betFifty} betHundred={this.betHundred} />
-                                {
-                                    this.state.displayBetAlert && (
-                                        <div className="row-align-center pt-4">
-                                            <div class="container-fluid">
-                                                <div class="row">
-                                                    <div class="col-md-10 col-md-offset-1">
-                                                        <div class="alert alert-warning" role="alert">
-                                                            <strong>You must bet at least $1</strong>
-                                                        </div>
-                                                    </div>
-
-                                                 </div>
-                                            </div>
-                                        </div>
-                                    )
-                                }
-                                {
-                                    this.state.displayFundsAlert && (
-                                        <div className="row-align-center pt-4">
-                                            <div class="container-fluid">
-                                                <div class="row">
-                                                    <div class="col-md-10 col-md-offset-1">
-                                                        <div class="alert alert-warning" role="alert">
-                                                            <strong>Insufficient funds!</strong>
-                                                        </div>
-                                                    </div>
-
-                                                 </div>
-                                            </div>
-                                        </div>
-                                    )
-                                }
+                                { this.state.displayBetAlert && ( <Minimum /> ) }
+                                { this.state.displayFundsAlert && ( <Funds /> ) }
                                 <hr />
                                 <br />
-                                <div className="row align-items-center">
-                                    <div className="col">
-                                    </div>
-                                    <div className="col">
-                                        <button type="button" className="btn btn-danger btn-lg btn-block" onClick={this.resetBet}>Reset</button>
-                                    </div>
-                                    <div className="col">
-                                    </div>
-                                    <div className="col">
-                                        <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.checkBlackjack}>Deal</button>
-                                    </div>
-                                    <div className="col">
-                                    </div>
-                                </div>
+                                <Buttons resetBet={this.resetBet} checkBlackJack={this.checkBlackjack} />
                             </div>
                         </div>
                     ) : (
@@ -287,7 +248,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-import { deal, gameOver, blackjack } from '../store';
+import { deal, gameOver, blackjack } from '../../store';
 
 const mapDispatchToProps = (dispatch)=> {
     return {

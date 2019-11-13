@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Bet from './Bet';
+import Bet from './Bet/Bet';
 
 export default class Game extends Component {
 
