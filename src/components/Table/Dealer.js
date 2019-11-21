@@ -25,7 +25,7 @@ class Dealer extends Component{
                                     count += 700
                                 }
                                 return (
-                                    <Card card={card} wait={count} />
+                                    <Card key={card.id} card={card} wait={count} />
                                 )
                             })
 

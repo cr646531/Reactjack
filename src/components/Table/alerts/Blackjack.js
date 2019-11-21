@@ -15,7 +15,7 @@ export default class Blackjack extends Component {
         var that = this;
         setTimeout(function(){
             that.activate();
-        }, 5000);
+        }, 4000);
     }
 
     activate(){

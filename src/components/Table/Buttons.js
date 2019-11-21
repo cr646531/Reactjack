@@ -31,16 +31,16 @@ class Buttons extends Component {
         return (
             <div>
                 <div>
-                    <button onClick={this.props.hit}>Hit Me</button>
-                    <button onClick={this.props.dealersTurn}>Stay</button>
+                    <button className="btn btn-success mx-2" onClick={this.props.hit}>Hit Me</button>
+                    <button className="btn btn-secondary mx-2" onClick={this.props.dealersTurn}>Stay</button>
                     {
                         this.props.displayDoubleDown && (
-                            <button onClick={this.doubleDown}>Double-down</button>
+                            <button className="btn btn-warning mx-2" onClick={this.doubleDown}>Double-down</button>
                         )
                     }
                     {
                         this.props.displaySplitButton && (
-                            <button onClick={this.props.split}>Split</button>
+                            <button className="btn btn-info mx-2" onClick={this.props.split}>Split</button>
                         )
                     }
                 </div>

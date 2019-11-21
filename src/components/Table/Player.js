@@ -57,7 +57,7 @@ class Player extends Component{
         if(playerTotal == 21){
             this.setState({ displayButtons: false });
             this.props.playerHit({ card: card, deck: deck, playerTotal: playerTotal, playerNumAces: playerNumAces });
-            this.dealersTurn()
+            this.dealersTurn(playerTotal)
             // dealer's turn
         } else if(playerTotal > 21){
             if(playerNumAces > 0){
@@ -75,7 +75,13 @@ class Player extends Component{
         }
     }
 
-    dealersTurn(playerTotal){
+    dealersTurn(total){
+
+        if(typeof total === "number"){
+            var playerTotal = total;    
+        } else {
+            var playerTotal = this.props.playerTotal;
+        }
 
         this.setState({ displayButtons: false });
         var deck = this.props.deck;
@@ -106,11 +112,15 @@ class Player extends Component{
     }
 
     checkWinConditions(dealerTotal, playerTotal){
+
+        console.log('\n\n\n\n\n\n\n\n\n\n\n')
+        console.log('dealer: ', dealerTotal);
+        console.log('player: ', playerTotal);
+
         if(playerTotal > 21){
             this.props.playerLoses();
             this.setState({ displayButtons: false, displayBusted: true })
         } else {
-            playerTotal = this.props.playerTotal;
             if(dealerTotal > 21){
                 this.props.playerWins();
                 this.setState({ displayButtons: false, displayWin: true });
@@ -146,6 +156,7 @@ class Player extends Component{
                     !this.state.displaySplit ? (
                         <div>
                             <h3>Player's Hand <span className="badge badge-pill badge-dark">{this.props.playerTotal}</span></h3>
+                            <br />
                             <div className="container py-2">
                                     <div className="row">
                                         <div className="col-lg-auto col-md-auto col-sm-auto">
@@ -160,7 +171,7 @@ class Player extends Component{
                                                             count = 0;
                                                         }
                                                         return (
-                                                            <Card card={card} wait={count}/>
+                                                            <Card key={card.id} card={card} wait={count}/>
                                                         )
                                                     })
                                                 }
@@ -178,9 +189,9 @@ class Player extends Component{
                                                 }
                                             </div>
                                         </div>
-                                        <div className="col">
+                                        <div className="col-lg-2 col-md-2 col-sm-0">
                                         </div>
-                                        <div className="col-4">
+                                        <div className="col-lg-auto col-md-auto col-sm-auto">
                                             <div className="row">
                                                 <BounceDiv>
                                                     { this.state.displayBusted && ( <Bust reset={this.reset} /> ) }
