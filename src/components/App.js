@@ -52,7 +52,7 @@ class App extends Component{
               this.state.displayGame ? (
                 <Bet endGame={this.endGame} />
               ) : (
-                <button onClick={this.play} />
+                <button type="button" class="btn btn-primary btn-lg" onClick={this.play} >Play</button>
               )
           }
 
