@@ -14,7 +14,8 @@ export default class Chips extends Component {
     constructor(){
         super();
         this.state = {
-            hidden: true
+            hidden: true,
+            playSound: true
         };
         this.show = this.show.bind(this);
     }
@@ -24,6 +25,9 @@ export default class Chips extends Component {
         setTimeout(function(){
             that.show();
         }, this.props.wait);
+        setTimeout(function(){
+            that.stopSound();
+        }, this.props.wait + 1000);
     }
 
     show(){
@@ -32,10 +36,20 @@ export default class Chips extends Component {
         })
     }
 
+    stopSound(){
+        this.setState({
+            playSound: false
+        })
+    }
+
     render(){
         return (
             <div>
-                <Sound url='sounds/chips.mp3' playStatus={Sound.status.PLAYING} />
+                {
+                    this.state.playSound && (
+                        <Sound url='sounds/chips.mp3' playStatus={Sound.status.PLAYING} />
+                    )
+                }
                 {
                     !this.state.hidden && (
                         <SlideDiv>

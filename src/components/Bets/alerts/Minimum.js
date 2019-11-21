@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Sound from 'react-sound';
 
 import styled, { keyframes } from 'styled-components';
 import { shake } from 'react-animations';
@@ -13,6 +14,7 @@ export default class Minimum extends Component {
     render(){
         return (
             <div>
+                <Sound url="sounds/alert.mp3" playStatus={Sound.status.PLAYING} />
                 <ShakeDiv>
                     <div className="row-align-center pt-4">
                         <div className="container-fluid">

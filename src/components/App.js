@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, HashRouter as Router } from 'react-router-dom';
 
-import $ from 'jquery';
-import Popper from 'popper.js';
 
 import Nav from './Nav/Navbar'
 import Bet from './Bets/Bet';
@@ -52,7 +50,7 @@ class App extends Component{
               this.state.displayGame ? (
                 <Bet endGame={this.endGame} />
               ) : (
-                <button type="button" class="btn btn-primary btn-lg" onClick={this.play} >Play</button>
+                <button type="button" className="btn btn-primary btn-lg" onClick={this.play} >Play</button>
               )
           }
 
