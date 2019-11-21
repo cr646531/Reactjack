@@ -148,7 +148,7 @@ class Player extends Component{
                             <h3>Player's Hand <span className="badge badge-pill badge-dark">{this.props.playerTotal}</span></h3>
                             <div className="container py-2">
                                     <div className="row">
-                                        <div className="col">
+                                        <div className="col-lg-auto col-md-auto col-sm-auto">
                                             <div className="row">
                                                 {
                                                     this.props.playerHand.map(card => {
@@ -179,6 +179,8 @@ class Player extends Component{
                                             </div>
                                         </div>
                                         <div className="col">
+                                        </div>
+                                        <div className="col-4">
                                             <div className="row">
                                                 <BounceDiv>
                                                     { this.state.displayBusted && ( <Bust reset={this.reset} /> ) }
