@@ -13,10 +13,16 @@ class App extends Component{
   constructor(){
     super();
     this.state = {
-        game_over: false
+        game_over: false,
+        displayGame: false
     };
     this.endGame = this.endGame.bind(this);
+    this.play = this.play.bind(this);
   };
+
+  play(){
+    this.setState({ displayGame: true });
+  }
 
   endGame(){
       this.setState({
@@ -33,22 +39,30 @@ class App extends Component{
         <div>
           <Nav />
           {
-                    !this.state.game_over ? (
-                        <Bet endGame={this.endGame} />
-                    ) : (
-                        <div className="container">
-                            <br />
-                            <div className="container py-10">
-                                <img src="game_over.gif" />
-                            </div>
-                        </div>
-                    )
+            this.state.game_over && (
+              <div className="container">
+                <br />
+                <div className="container py-10">
+                    <img src="game_over.gif" />
+                </div>
+              </div>
+            )
           }
+          {
+              this.state.displayGame ? (
+                <Bet endGame={this.endGame} />
+              ) : (
+                <button onClick={this.play} />
+              )
+          }
+
+
           {/* <Router>
             <div>
               <Route path = '/play' component = { Bet } />
             </div>
           </Router> */}
+
           <br />
           <div className="container">
             <footer className="footer">

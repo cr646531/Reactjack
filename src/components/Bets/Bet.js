@@ -150,7 +150,7 @@ class Bet extends Component{
                         <div>
                             <hr />
                             <div className="container py-2">
-                                <Chips bet={this.bet} wait={1000} />
+                                <Chips bet={this.bet} wait={500} />
                                 { this.state.displayBetAlert && ( <Minimum /> ) }
                                 { this.state.displayFundsAlert && ( <Funds /> ) }
                                 <hr />

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import Sound from 'react-sound';
 
 import styled, { keyframes } from 'styled-components';
 import { slideInLeft } from 'react-animations';
 
 const slideAnimation = keyframes`${slideInLeft}`;
 const SlideDiv = styled.div`
-    animation: 2s ${slideAnimation};
+    animation: 1.5s ${slideAnimation};
 `;
 
 export default class Chips extends Component {
@@ -34,6 +35,7 @@ export default class Chips extends Component {
     render(){
         return (
             <div>
+                <Sound url='sounds/chips.mp3' playStatus={Sound.status.PLAYING} />
                 {
                     !this.state.hidden && (
                         <SlideDiv>
