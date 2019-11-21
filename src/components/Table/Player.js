@@ -131,7 +131,7 @@ class Player extends Component{
     }
 
     render(){
-        var count = 1000;
+        var count = 1400;
 
         return (
             <div>
@@ -143,10 +143,10 @@ class Player extends Component{
                                 <div className="row">
                                     {
                                         this.props.playerHand.map(card => {
-                                            if(count === 1000){
-                                                count += 1000;
-                                            } else if(count === 2000){
-                                                count += 1000;
+                                            if(count === 1400){
+                                                count += 700;
+                                            } else if(count === 2100){
+                                                count += 700;
                                             } else {
                                                 count = 0;
                                             }

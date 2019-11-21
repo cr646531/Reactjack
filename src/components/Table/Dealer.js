@@ -6,7 +6,8 @@ import Card from './Card';
 class Dealer extends Component{
 
     render(){
-        var count = 0;
+        var count = 1;
+        var flag = 0;
         var downCard = {
             rank: 'red_back',
             suit: ''
@@ -18,7 +19,11 @@ class Dealer extends Component{
                     <div className="row">
                         {
                             this.props.dealerHand.map(card => {
-                                count += 500;
+                                if(count == 701){
+                                    count = 0;
+                                } else {
+                                    count += 700
+                                }
                                 return (
                                     <Card card={card} wait={count} />
                                 )
@@ -28,7 +33,7 @@ class Dealer extends Component{
                         }
                         {
                             //this.props.displayFaceDownCard && <img className="px-1" src="cards/red_back.png" />
-                            this.props.displayFaceDownCard && <Card card={downCard} count={0} />
+                            this.props.displayFaceDownCard && <Card card={downCard} wait={count + 700} />
                         }
                     </div>
                 </div>

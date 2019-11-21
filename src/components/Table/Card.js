@@ -14,7 +14,7 @@ export default class Card extends Component {
     constructor(){
         super();
         this.state = {
-            playSound: true,
+            playSound: false,
             hidden: true
         };
         this.show = this.show.bind(this);
@@ -29,9 +29,11 @@ export default class Card extends Component {
 
     show(){
         this.setState({
-            hidden: false
+            hidden: false,
+            playSound: true
         })
     }
+
 
     render(){
 
@@ -39,7 +41,17 @@ export default class Card extends Component {
 
         return (
             <div>
-                <Sound url='sounds/card.mp3' playStatus={Sound.status.PLAYING} />
+                {
+                    this.state.playSound && (
+                        <div>
+                        <Sound 
+                            url='sounds/card.mp3' 
+                            playStatus={Sound.status.PLAYING} 
+                        />
+                        <Sound url='sound/card.mp3' playStatus={Sound.status.PAUSED} />
+                        </div>
+                    )
+            }
                 {
                     !this.state.hidden && (
                     <RollinDiv>
