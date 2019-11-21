@@ -13,6 +13,13 @@ import Blackjack from './alerts/Blackjack';
 
 import Card from './Card';
 
+import styled, { keyframes } from 'styled-components';
+import { bounceIn } from 'react-animations';
+
+const bounceAnimation = keyframes`${bounceIn}`;
+const BounceDiv = styled.div`
+    animation: infinite 5s ${bounceAnimation};
+`;
 
 
 class Player extends Component{
@@ -24,7 +31,7 @@ class Player extends Component{
             displayWin: false,
             displayLose: false,
             displayPush: false,
-            displaySplit: false
+            displaySplit: false,
         }
         this.hit = this.hit.bind(this);
         this.reset = this.reset.bind(this);
@@ -140,34 +147,53 @@ class Player extends Component{
                         <div>
                             <h3>Player's Hand <span className="badge badge-pill badge-dark">{this.props.playerTotal}</span></h3>
                             <div className="container py-2">
-                                <div className="row">
-                                    {
-                                        this.props.playerHand.map(card => {
-                                            if(count === 1400){
-                                                count += 700;
-                                            } else if(count === 2100){
-                                                count += 700;
-                                            } else {
-                                                count = 0;
-                                            }
-                                            return (
-                                                <Card card={card} wait={count}/>
-                                            )
-                                        })
-                                    }
-                                </div>
+                                    <div className="row">
+                                        <div className="col">
+                                            <div className="row">
+                                                {
+                                                    this.props.playerHand.map(card => {
+                                                        if(count === 1400){
+                                                            count += 700;
+                                                        } else if(count === 2100){
+                                                            count += 700;
+                                                        } else {
+                                                            count = 0;
+                                                        }
+                                                        return (
+                                                            <Card card={card} wait={count}/>
+                                                        )
+                                                    })
+                                                }
+                                                <br />
+                                                <br />
+                                            </div>
+                                            <div className="row">
+                                                <br />
+                                            </div>
+                                            <div className="row">         
+                                                {
+                                                    this.state.displayButtons && !this.props.displayBlackjack && (
+                                                        <Buttons hit={this.hit} dealersTurn={this.dealersTurn} split={this.split} />
+                                                    )
+                                                }
+                                            </div>
+                                        </div>
+                                        <div className="col">
+                                            <div className="row">
+                                                <BounceDiv>
+                                                    { this.state.displayBusted && ( <Bust reset={this.reset} /> ) }
+                                                    { this.state.displayWin && ( <Win reset={this.reset} /> ) }
+                                                    { this.state.displayLose && ( <Lose reset={this.reset} /> ) }
+                                                    { this.state.displayPush && ( <Push reset={this.reset} /> ) }
+                                                    { this.props.displayBlackjack && ( <Blackjack reset={this.reset} /> ) }
+                                                </BounceDiv>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                        
                             </div>
                             <br />
-                            {
-                                this.state.displayButtons && !this.props.displayBlackjack && (
-                                    <Buttons hit={this.hit} dealersTurn={this.dealersTurn} split={this.split} />
-                                )
-                            }
-                            { this.state.displayBusted && ( <Bust reset={this.reset} /> ) }
-                            { this.state.displayWin && ( <Win reset={this.reset} /> ) }
-                            { this.state.displayLose && ( <Lose reset={this.reset} /> ) }
-                            { this.state.displayPush && ( <Push reset={this.reset} /> ) }
-                            { this.props.blackjack && ( <Blackjack reset={this.reset} /> ) }
                         </div>
                     ) : (
                         <Split takeBets={this.props.takeBets} />

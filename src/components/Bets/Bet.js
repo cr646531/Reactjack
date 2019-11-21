@@ -8,6 +8,7 @@ import Chips from './Chips';
 import Buttons from './Buttons';
 import Minimum from './alerts/Minimum';
 import Funds from './alerts/Funds';
+import Blackjack from '../Table/alerts/Blackjack';
 
 
 class Bet extends Component{
@@ -164,16 +165,7 @@ class Bet extends Component{
                             <Dealer />
                             <hr />
                             {
-                                <Player takeBets={this.takeBets} />
-                            }
-                            {
-                                this.state.displayBlackjack && (
-                                    <div>
-                                        <h3>Blackjack!</h3>
-                                        <br />
-                                        <button onClick={this.takeBets}>Play again?</button>
-                                    </div>
-                                )
+                                <Player takeBets={this.takeBets} displayBlackjack={this.state.displayBlackjack}/>
                             }
                         </div>
                     )
