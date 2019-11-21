@@ -9,6 +9,7 @@ import Buttons from './Buttons';
 import Minimum from './alerts/Minimum';
 import Funds from './alerts/Funds';
 
+
 class Bet extends Component{
     constructor(){
         super();
@@ -48,9 +49,7 @@ class Bet extends Component{
     }
 
     resetBet(){
-        this.setState({
-            bet: 0
-        });
+        this.setState({ bet: 0, displayFundsAlert: false, displayBetAlert: false });
     };
 
     deal(){
@@ -151,7 +150,7 @@ class Bet extends Component{
                         <div>
                             <hr />
                             <div className="container py-2">
-                                <Chips bet={this.bet} />
+                                <Chips bet={this.bet} wait={1000} />
                                 { this.state.displayBetAlert && ( <Minimum /> ) }
                                 { this.state.displayFundsAlert && ( <Funds /> ) }
                                 <hr />
