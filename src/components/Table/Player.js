@@ -112,11 +112,6 @@ class Player extends Component{
     }
 
     checkWinConditions(dealerTotal, playerTotal){
-
-        console.log('\n\n\n\n\n\n\n\n\n\n\n')
-        console.log('dealer: ', dealerTotal);
-        console.log('player: ', playerTotal);
-
         if(playerTotal > 21){
             this.props.playerLoses();
             this.setState({ displayButtons: false, displayBusted: true })

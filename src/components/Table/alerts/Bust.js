@@ -9,6 +9,7 @@ export default class Bust extends Component {
             active: false
         };
         this.activate = this.activate.bind(this);
+        soundManager.setup({ debugMode: false });
     };
 
     componentDidMount(){

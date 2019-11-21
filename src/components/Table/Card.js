@@ -18,6 +18,7 @@ export default class Card extends Component {
             hidden: true
         };
         this.show = this.show.bind(this);
+        soundManager.setup({ debugMode: false });
     };
 
     componentDidMount(){
