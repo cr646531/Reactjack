@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Sound from 'react-sound';
 
 import styled, { keyframes } from 'styled-components';
 import { rollIn } from 'react-animations';
@@ -38,6 +39,7 @@ export default class Card extends Component {
 
         return (
             <div>
+                <Sound url='sounds/card.mp3' playStatus={Sound.status.PLAYING} />
                 {
                     !this.state.hidden && (
                     <RollinDiv>
