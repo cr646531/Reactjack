@@ -11,6 +11,8 @@ import Lose from './alerts/Lose';
 import Push from './alerts/Push';
 import Blackjack from './alerts/Blackjack';
 
+import Card from './Card';
+
 
 
 class Player extends Component{
@@ -129,6 +131,8 @@ class Player extends Component{
     }
 
     render(){
+        var count = 1000;
+
         return (
             <div>
                 {
@@ -138,9 +142,18 @@ class Player extends Component{
                             <div className="container py-2">
                                 <div className="row">
                                     {
-                                        this.props.playerHand.map(card => (
-                                            <img key={`${card.rank}${card.suit}`} className="px-1" src={`cards/${card.rank}${card.suit}.png`} />
-                                        ))
+                                        this.props.playerHand.map(card => {
+                                            if(count === 1000){
+                                                count += 1000;
+                                            } else if(count === 2000){
+                                                count += 1000;
+                                            } else {
+                                                count = 0;
+                                            }
+                                            return (
+                                                <Card card={card} wait={count}/>
+                                            )
+                                        })
                                     }
                                 </div>
                             </div>
