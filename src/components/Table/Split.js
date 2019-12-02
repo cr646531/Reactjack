@@ -1,6 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Bust from './alerts/Bust';
+import Win from './alerts/Win';
+import Lose from './alerts/Lose';
+import Push from './alerts/Push';
+// import Blackjack from './alerts/Blackjack';
+import Card from './Card';
+
+
+import styled, { keyframes } from 'styled-components';
+import { bounceIn } from 'react-animations';
+
+const bounceAnimation = keyframes`${bounceIn}`;
+const BounceDiv = styled.div`
+    animation: infinite 5s ${bounceAnimation};
+`;
 
 class Split extends Component{
     constructor(){
@@ -287,11 +302,11 @@ class Split extends Component{
             <div>
                 {
                     this.state.displayOpening && (
-                        <div className="container bg-light">
+                        <div className="container">
                             <div className="container py-2">
                                 <div className="row align-items-center">
                                     <div className="col">
-                                        <h3>Hand <span className="badge badge-pill badge-dark">{this.props.playerHand[0].value}</span></h3>
+                                        <h3 className="text-white">Hand <span className="badge badge-pill badge-dark">{this.props.playerHand[0].value}</span></h3>
                                         <div className="container py-2">
                                             <div className="row">
                                                 {
@@ -300,12 +315,12 @@ class Split extends Component{
                                             </div>
                                             <br />
                                             <div className="row">
-                                                <button onClick={this.setup}>Hit</button>
+                                                <button className="btn btn-success mx-2" onClick={this.setup}>Hit</button>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col">
-                                        <h3>Hand <span className="badge badge-pill badge-dark">{this.props.playerHand[1].value}</span></h3>
+                                        <h3 className="text-white">Hand <span className="badge badge-pill badge-dark">{this.props.playerHand[1].value}</span></h3>
                                         <div className="container py-2">
                                             <div className="row">
                                                 {
@@ -324,16 +339,18 @@ class Split extends Component{
                 {
                     !this.state.displayOpening && (
                         <div>
-                            <div className="container bg-light">
+                            <div className="container">
                                 <div className="container py-2">
                                     <div className="row align-items-center">
                                         <div className="col">
-                                            <h3>Hand <span className="badge badge-pill badge-dark">{this.state.totalOne}</span></h3>
+                                            <h3 className="text-white">Hand <span className="badge badge-pill badge-dark">{this.state.totalOne}</span></h3>
                                             <div className="container py-2">
                                                 <div className="row">
                                                     {
+
                                                         this.state.handOne.map(card => (
-                                                            <img key={`${card.rank}${card.suit}`} className="px-1" src={`cards/${card.rank}${card.suit}.png`} />
+                                                            // <img key={`${card.rank}${card.suit}`} className="px-1" src={`cards/${card.rank}${card.suit}.png`} />
+                                                            <Card key={`${card.rank}${card.suit}`} card={card} wait={0}/>
                                                         ))
                                                     }
                                                 </div>
@@ -342,42 +359,29 @@ class Split extends Component{
                                                     {
                                                         this.state.displayButtonsOne && (
                                                             <div>
-                                                                <button onClick={this.oneHit}>Hit</button>
-                                                                <button onClick={this.oneStay}>Stay</button>
+                                                                <button className="btn btn-success mx-2" onClick={this.oneHit}>Hit</button>
+                                                                <button className="btn btn-secondary mx-2" onClick={this.oneStay}>Stay</button>
                                                             </div>
                                                         )
                                                     }
-                                                    {
-                                                        this.state.displayBustedOne && (
-                                                            <h3>Busted!</h3>
-                                                        )
-                                                    }
-                                                    {
-                                                        this.state.displayWinOne && (
-                                                            <h3>Player Wins!</h3>
-                                                        )
-                                                    }
-                                                    {
-                                                        this.state.displayLoseOne && (
-                                                            <h3>Player Loses!</h3>
-                                                        )
-                                                    }
-                                                    {
-                                                        this.state.displayPushOne && (
-                                                            <h3>Push</h3>
-                                                        )
-                                                    }
+                                                    <BounceDiv>
+                                                        { this.state.displayBustedOne && ( <Bust reset={this.reset} displayPlayAgain={false} /> ) }
+                                                        { this.state.displayWinOne && ( <Win reset={this.reset} displayPlayAgain={false} /> ) }
+                                                        { this.state.displayLoseOne && ( <Lose reset={this.reset} displayPlayAgain={false} /> ) }
+                                                        { this.state.displayPushOne && ( <Push reset={this.reset} displayPlayAgain={false} /> ) }
+                                                    </BounceDiv>
                                                 </div> 
                                             </div>
                                         </div>
 
                                         <div className="col">
-                                            <h3>Hand <span className="badge badge-pill badge-dark">{this.state.totalTwo}</span></h3>
+                                            <h3 className="text-white">Hand <span className="badge badge-pill badge-dark">{this.state.totalTwo}</span></h3>
                                             <div className="container py-2">
                                                 <div className="row">
                                                     {
                                                         this.state.handTwo.map(card => (
-                                                            <img key={`${card.rank}${card.suit}`} className="px-1" src={`cards/${card.rank}${card.suit}.png`} />
+                                                            // <img key={`${card.rank}${card.suit}`} className="px-1" src={`cards/${card.rank}${card.suit}.png`} />
+                                                            <Card key={`${card.rank}${card.suit}`} card={card} wait={0}/>
                                                         ))
                                                     }
                                                 </div>
@@ -386,35 +390,21 @@ class Split extends Component{
                                                     {
                                                         this.state.displayButtonsTwo && (
                                                             <div>
-                                                                <button onClick={this.twoHit}>Hit</button>
+                                                                <button className="btn btn-success mx-2" onClick={this.twoHit}>Hit</button>
                                                                 {
                                                                     this.state.displayStayTwo && (
-                                                                        <button onClick={this.twoStay}>Stay</button>
+                                                                        <button className="btn btn-secondary mx-2" onClick={this.twoStay}>Stay</button>
                                                                     )
                                                                 }
                                                             </div>
                                                         )
                                                     }
-                                                    {
-                                                        this.state.displayBustedTwo && (
-                                                            <h3>Busted!</h3>
-                                                        )
-                                                    }
-                                                    {
-                                                        this.state.displayWinTwo && (
-                                                            <h3>Player Wins!</h3>
-                                                        )
-                                                    }
-                                                    {
-                                                        this.state.displayLoseTwo && (
-                                                            <h3>Player Loses!</h3>
-                                                        )
-                                                    }
-                                                    {
-                                                        this.state.displayPushTwo && (
-                                                            <h3>Push</h3>
-                                                        )
-                                                    }
+                                                    <BounceDiv>
+                                                        { this.state.displayBustedTwo && ( <Bust reset={this.reset} displayPlayAgain={false} /> ) }
+                                                        { this.state.displayWinTwo && ( <Win reset={this.reset} displayPlayAgain={false} /> ) }
+                                                        { this.state.displayLoseTwo && ( <Lose reset={this.reset} displayPlayAgain={false} /> ) }
+                                                        { this.state.displayPushTwo && ( <Push reset={this.reset} displayPlayAgain={false} /> ) }
+                                                    </BounceDiv>
                                                 </div>
                                             </div>
                                         </div>
@@ -426,12 +416,12 @@ class Split extends Component{
                 }  
                 { 
                     this.state.displayBustedOne && this.state.displayBustedTwo && (
-                        <button onClick={this.checkWinConditions}>Play again?</button>
+                        <button className="btn btn-primary" onClick={this.checkWinConditions}>Play again?</button>
                     )
                 }
                 {
                     this.state.displayPlayAgain && (
-                        <button onClick={this.reset} >Play again?</button>
+                        <button className="btn btn-primary" onClick={this.reset} >Play again?</button>
                     )
                 }
 

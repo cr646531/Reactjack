@@ -56,7 +56,7 @@ export default class Card extends Component {
                 {
                     !this.state.hidden && (
                     <RollinDiv>
-                        <img key={`${card.rank}${card.suit}`} className="px-1" src={`cards/${card.rank}${card.suit}.png`} />
+                        <img className="px-1" src={`cards/${card.rank}${card.suit}.png`} />
                     </RollinDiv>
                     )
                 }

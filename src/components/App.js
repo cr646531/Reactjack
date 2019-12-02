@@ -24,7 +24,8 @@ class App extends Component{
 
   endGame(){
       this.setState({
-          game_over: true
+          game_over: true,
+          displayGame: false
       });
   };
 
@@ -76,7 +77,7 @@ import { loadDeck, loadRiggedDeck, loadRiggedSplit } from '../store';
 
 const mapDispatchToProps = (dispatch)=> {
   return {
-    init: ()=> dispatch(loadDeck()),
+    init: ()=> dispatch(loadRiggedSplit()),
   };
 };
 

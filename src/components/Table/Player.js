@@ -150,7 +150,7 @@ class Player extends Component{
                 {
                     !this.state.displaySplit ? (
                         <div>
-                            <h3>Player's Hand <span className="badge badge-pill badge-dark">{this.props.playerTotal}</span></h3>
+                            <h3 className="text-white">Player's Hand <span className="badge badge-pill badge-dark">{this.props.playerTotal}</span></h3>
                             <br />
                             <div className="container py-2">
                                     <div className="row">
@@ -166,7 +166,7 @@ class Player extends Component{
                                                             count = 0;
                                                         }
                                                         return (
-                                                            <Card key={card.id} card={card} wait={count}/>
+                                                            <Card key={`${card.rank}${card.suit}`} card={card} wait={count}/>
                                                         )
                                                     })
                                                 }
@@ -189,11 +189,11 @@ class Player extends Component{
                                         <div className="col-lg-auto col-md-auto col-sm-auto">
                                             <div className="row">
                                                 <BounceDiv>
-                                                    { this.state.displayBusted && ( <Bust reset={this.reset} /> ) }
-                                                    { this.state.displayWin && ( <Win reset={this.reset} /> ) }
-                                                    { this.state.displayLose && ( <Lose reset={this.reset} /> ) }
-                                                    { this.state.displayPush && ( <Push reset={this.reset} /> ) }
-                                                    { this.props.displayBlackjack && ( <Blackjack reset={this.reset} /> ) }
+                                                    { this.state.displayBusted && ( <Bust reset={this.reset} displayPlayAgain={true} /> ) }
+                                                    { this.state.displayWin && ( <Win reset={this.reset} displayPlayAgain={true} /> ) }
+                                                    { this.state.displayLose && ( <Lose reset={this.reset} displayPlayAgain={true} /> ) }
+                                                    { this.state.displayPush && ( <Push reset={this.reset} displayPlayAgain={true} /> ) }
+                                                    { this.props.displayBlackjack && ( <Blackjack reset={this.reset} displayPlayAgain={true} /> ) }
                                                 </BounceDiv>
                                             </div>
                                         </div>

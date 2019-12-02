@@ -38,9 +38,13 @@ export default class Bust extends Component {
                             <div className="row">
                                 <br />
                             </div>
-                            <div className="row">
-                                <button type="button" className="btn btn-primary" onClick={this.props.reset}>Play Again</button>
-                            </div>
+                            {
+                                this.props.displayPlayAgain && (
+                                    <div className="row">
+                                        <button type="button" className="btn btn-primary" onClick={this.props.reset}>Play Again</button>
+                                    </div>
+                                )
+                            }
                         </div>
                         
                     )

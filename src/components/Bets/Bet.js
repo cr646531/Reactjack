@@ -10,6 +10,13 @@ import Minimum from './alerts/Minimum';
 import Funds from './alerts/Funds';
 import Blackjack from '../Table/alerts/Blackjack';
 
+var style = {
+    height: "100%",
+    backgroundSize: "cover",
+    backgroundImage: "url('felt.jpg')",
+    backgroundRepeat: "repeat",
+}
+
 
 class Bet extends Component{
     constructor(){
@@ -134,15 +141,15 @@ class Bet extends Component{
 
     render(){
         return (
-            <div className="container bg-light">
+            <div id="main" style={style} className="container">
                 <br />
                 <div className="container py-2">
                     <div className="row align-items-center">
                         <div className="col">
-                            <p className="h2 text-center">Bankroll: <span className="badge badge-pill badge-success">${this.props.bankroll - this.state.bet}</span></p>
+                            <p className="h2 text-center text-white">Bankroll: <span className="badge badge-pill badge-success">${this.props.bankroll - this.state.bet}</span></p>
                         </div>
                         <div className="col">
-                            <p className="h2 text-center">Bet: <span className="badge badge-pill badge-warning">${this.state.bet}</span></p>
+                            <p className="h2 text-center text-white">Bet: <span className="badge badge-pill badge-warning">${this.state.bet}</span></p>
                         </div>
                     </div>
                 </div>
