@@ -54,7 +54,7 @@ export default class Nav extends Component {
                                 <a className="nav-link" href="#">About</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Rules</a>
+                                <a className="nav-link" onClick={this.props.toggleRules} href="#">Rules</a>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="#">Contact</a>

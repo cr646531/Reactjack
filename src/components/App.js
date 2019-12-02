@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { Route, HashRouter as Router } from 'react-router-dom';
 
 
-import Nav from './Nav/Navbar'
+import Nav from './Nav/Navbar';
 import Bet from './Bets/Bet';
+import Rules from './Nav/Rules';
 
 class App extends Component{
 
@@ -12,10 +13,12 @@ class App extends Component{
     super();
     this.state = {
         game_over: false,
-        displayGame: false
+        displayGame: false,
+        displayRules: false
     };
     this.endGame = this.endGame.bind(this);
     this.play = this.play.bind(this);
+    this.toggleRules = this.toggleRules.bind(this);
   };
 
   play(){
@@ -33,10 +36,23 @@ class App extends Component{
     this.props.init();
   }
 
+  toggleRules(){
+    if(this.state.displayRules){
+      this.setState({ displayRules: false });
+    } else {
+      this.setState({ displayRules: true });
+    }
+  }
+
   render(){
       return (
         <div>
-          <Nav />
+          <Nav toggleRules={this.toggleRules} />
+          {
+            this.state.displayRules && (
+              <Rules toggleRules={this.toggleRules} play={this.play}/>
+            )
+          }
           {
             this.state.game_over && (
               <div className="container">
@@ -51,7 +67,10 @@ class App extends Component{
               this.state.displayGame ? (
                 <Bet endGame={this.endGame} />
               ) : (
-                <button type="button" className="btn btn-primary btn-lg" onClick={this.play} >Play</button>
+                <div className="container">
+                  {/* <button type="button" className="btn btn-primary btn-lg" onClick={this.play} >Play</button> */}
+                  <img onClick={this.play} src="/play.png" />
+                </div>
               )
           }
 
