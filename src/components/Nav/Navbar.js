@@ -61,7 +61,7 @@ export default class Nav extends Component {
                             </li>
                         </ul>
                     </div>
-                    {/* <form className="form-inline my-2 my-lg-0">
+                    <form className="form-inline my-2 my-lg-0">
                     <div className="slidecontainer">
                         <label htmlFor="volume">Volume  -</label>
                         <input id="volume" type="range" min="0" max="100" name="volume" value={this.state.volume} onChange={this.toggleVolume} />
@@ -79,7 +79,7 @@ export default class Nav extends Component {
                                 </div>
                             )
                         }
-                    </form> */}
+                    </form>
                 </nav>  
                 <br />
                 <br />   

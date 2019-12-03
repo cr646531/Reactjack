@@ -18,7 +18,7 @@ export default class Chips extends Component {
             playSound: true
         };
         this.show = this.show.bind(this);
-        soundManager.setup({ debugMode: false });
+        soundManager.setup({ debugMode: false, ignoreMobileRestrictions: true });
     }
 
     componentDidMount(){
