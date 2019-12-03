@@ -11,14 +11,14 @@ export default class Rules extends Component {
 
         return (
             <div className="container">
-                <div class="jumbotron">
-                    <h1 class="display-4">Welcome to Blackjack-react!</h1>
-                    <p class="lead">Blackjack, also known to some as twenty-one, is one of the most popular casino games around - and also super simple to learn! This easy to use, simple Blackjack game will certainly become your new favorite on the web!</p>
-                    <hr class="my-4" />
+                <div className="jumbotron">
+                    <h1 className="display-4">Welcome to Blackjack-react!</h1>
+                    <p className="lead">Blackjack, also known to some as twenty-one, is one of the most popular casino games around - and also super simple to learn! This easy to use, simple Blackjack game will certainly become your new favorite on the web!</p>
+                    <hr className="my-4" />
                     <p>{p1}</p>
                     <p>{p2}</p>
                     <p>{p3}</p>
-                    <a class="btn btn-primary btn-lg" onClick={this.props.toggleRules} href="#" role="button">Hide</a>
+                    <a className="btn btn-primary btn-lg" onClick={this.props.toggleRules} href="#" role="button">Hide</a>
                 </div>
             </div>
         )
