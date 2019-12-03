@@ -146,10 +146,10 @@ class Bet extends Component{
                 <div className="container py-2">
                     <div className="row align-items-center">
                         <div className="col">
-                            <p className="h2 text-center text-white">Bankroll: <span className="badge badge-pill badge-success">${this.props.bankroll - this.state.bet}</span></p>
+                            <p className="h3 text-center text-white">Bankroll: <span className="badge badge-pill badge-success">${this.props.bankroll - this.state.bet}</span></p>
                         </div>
                         <div className="col">
-                            <p className="h2 text-center text-white">Bet: <span className="badge badge-pill badge-warning">${this.state.bet}</span></p>
+                            <p className="h3 text-center text-white">Bet: <span className="badge badge-pill badge-warning">${this.state.bet}</span></p>
                         </div>
                     </div>
                 </div>
