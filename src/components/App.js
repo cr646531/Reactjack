@@ -96,7 +96,7 @@ import { loadDeck, loadRiggedDeck, loadRiggedSplit } from '../store';
 
 const mapDispatchToProps = (dispatch)=> {
   return {
-    init: ()=> dispatch(loadRiggedSplit()),
+    init: ()=> dispatch(loadDeck()),
   };
 };
 
