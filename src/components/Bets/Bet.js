@@ -11,7 +11,7 @@ import Funds from './alerts/Funds';
 import Blackjack from '../Table/alerts/Blackjack';
 
 var style = {
-    height: "100%",
+    height: "200%",
     backgroundSize: "cover",
     backgroundImage: "url('felt.jpg')",
     backgroundRepeat: "repeat",
