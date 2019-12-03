@@ -2,7 +2,7 @@
   "name": "blackjack-react",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "server/server.js",
   "scripts": {
     "postinstall": "npm run webpack",
     "webpack": "webpack",
