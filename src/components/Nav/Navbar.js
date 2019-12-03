@@ -12,7 +12,7 @@ export default class Nav extends Component {
             volume: 0
             
         };
-        soundManager.setup({ debugMode: false });
+        soundManager.setup({ debugMode: false, ignoreMobileRestrictions: true });
         this.mute = this.mute.bind(this);
         this.unmute = this.unmute.bind(this);
         this.hideJumbotron = this.hideJumbotron.bind(this);
