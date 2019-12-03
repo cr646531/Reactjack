@@ -43,13 +43,12 @@ export default class Nav extends Component {
     render(){
         return (
             <div>
-                {/* <nav className="navbar navbar-expand-sm navbar-light bg-light"> */}
-                <nav className="navbar navbar-light bg-light">
+                <nav className="navbar navbar-expand-sm navbar-light bg-light">
                     <a className="navbar-brand" href="#">Blackjack-react</a>
-                    {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
-                    </button> */}
-                    {/* <div className="collapse navbar-collapse" id="navbarNav">
+                    </button>
+                    <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav">
                             <li className="nav-item">
                                 <a className="nav-link" href="#">About</a>
@@ -61,7 +60,7 @@ export default class Nav extends Component {
                                 <a className="nav-link" href="#">Contact</a>
                             </li>
                         </ul>
-                    </div> */}
+                    </div>
                     <form className="form-inline my-2 my-lg-0">
                     <div className="slidecontainer">
                         <label htmlFor="volume">Volume  -</label>
